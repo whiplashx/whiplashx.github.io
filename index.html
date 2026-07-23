@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>whiplashx ~ portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0e27;
+            color: #00ff41;
+            font-family: 'Courier New', 'Courier', monospace;
+            line-height: 1.6;
+            font-size: 14px;
+            overflow-x: hidden;
+        }
+
+        .terminal {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            border-bottom: 2px solid #00ff41;
+            padding-bottom: 30px;
+        }
+
+        .ascii-art {
+            font-size: 12px;
+            white-space: pre;
+            overflow-x: auto;
+            margin-bottom: 20px;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 20px 0 10px;
+            color: #00ff41;
+            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        }
+
+        .subtitle {
+            color: #888;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .nav {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: #00ff41;
+            text-decoration: none;
+            border: 1px solid #00ff41;
+            padding: 8px 16px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav a:hover {
+            background-color: #00ff41;
+            color: #0a0e27;
+            box-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            color: #00ff41;
+            font-size: 18px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-left: 2px solid #00ff41;
+            padding-left: 10px;
+        }
+
+        .project {
+            margin-bottom: 30px;
+            padding: 15px;
+            border-left: 1px solid #00ff41;
+            padding-left: 20px;
+        }
+
+        .project-title {
+            color: #00ff41;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .project-desc {
+            color: #aaa;
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+
+        .project-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: rgba(0, 255, 65, 0.1);
+            color: #00ff41;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 11px;
+            border: 1px solid #00ff41;
+        }
+
+        .contact-item {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-bottom: 1px solid #333;
+        }
+
+        .contact-label {
+            color: #00ff41;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        a {
+            color: #00ff41;
+            text-decoration: underline;
+        }
+
+        a:hover {
+            color: #00ffff;
+            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 80px;
+            padding-top: 30px;
+            border-top: 2px solid #00ff41;
+            color: #888;
+            font-size: 12px;
+        }
+
+        .prompt {
+            color: #888;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 24px;
+            }
+
+            .nav {
+                gap: 15px;
+            }
+
+            .ascii-art {
+                font-size: 10px;
+            }
+        }
+
+        /* Cursor animation */
+        @keyframes blink {
+            0%, 50% { opacity: 1; }
+            51%, 100% { opacity: 0; }
+        }
+
+        .cursor {
+            display: inline-block;
+            width: 10px;
+            height: 1.2em;
+            background-color: #00ff41;
+            animation: blink 1s infinite;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="terminal">
+        <div class="header">
+            <div class="ascii-art">
+    ╔═══════════════════════════════╗
+    ║     WHIPLASHX ~ PORTFOLIO     ║
+    ╚═══════════════════════════════╝
+            </div>
+            <h1>> whiplashx</h1>
+            <p class="subtitle">// minimalist developer portfolio</p>
+        </div>
+
+        <div class="nav">
+            <a href="#about">about</a>
+            <a href="#projects">projects</a>
+            <a href="#skills">skills</a>
+            <a href="#contact">contact</a>
+        </div>
+
+        <div id="about" class="section">
+            <div class="section-title">> about</div>
+            <p>
+                <span class="prompt">$</span> cat profile.txt
+            </p>
+            <p style="margin-top: 15px; color: #aaa;">
+                A passionate developer crafting elegant solutions to complex problems.
+                Specializing in full-stack development with a minimalist design philosophy.
+            </p>
+        </div>
+
+        <div id="projects" class="section">
+            <div class="section-title">> projects</div>
+            
+            <div class="project">
+                <div class="project-title">[ project_one ]</div>
+                <div class="project-desc">Description of your first project goes here.</div>
+                <div class="project-tags">
+                    <span class="tag">javascript</span>
+                    <span class="tag">web</span>
+                    <span class="tag">responsive</span>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-title">[ project_two ]</div>
+                <div class="project-desc">Description of your second project goes here.</div>
+                <div class="project-tags">
+                    <span class="tag">python</span>
+                    <span class="tag">backend</span>
+                    <span class="tag">api</span>
+                </div>
+            </div>
+
+            <div class="project">
+                <div class="project-title">[ project_three ]</div>
+                <div class="project-desc">Description of your third project goes here.</div>
+                <div class="project-tags">
+                    <span class="tag">react</span>
+                    <span class="tag">fullstack</span>
+                    <span class="tag">database</span>
+                </div>
+            </div>
+        </div>
+
+        <div id="skills" class="section">
+            <div class="section-title">> skills</div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
+                <div>
+                    <div style="color: #00ff41; margin-bottom: 10px; font-weight: bold;">languages</div>
+                    <ul style="list-style: none; color: #aaa;">
+                        <li>• JavaScript</li>
+                        <li>• Python</li>
+                        <li>• TypeScript</li>
+                        <li>• CSS/HTML</li>
+                    </ul>
+                </div>
+                <div>
+                    <div style="color: #00ff41; margin-bottom: 10px; font-weight: bold;">tools & frameworks</div>
+                    <ul style="list-style: none; color: #aaa;">
+                        <li>• React</li>
+                        <li>• Node.js</li>
+                        <li>• Git</li>
+                        <li>• Docker</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div id="contact" class="section">
+            <div class="section-title">> contact</div>
+            
+            <div class="contact-item">
+                <span class="contact-label">email:</span>
+                <a href="mailto:your.email@example.com">your.email@example.com</a>
+            </div>
+
+            <div class="contact-item">
+                <span class="contact-label">github:</span>
+                <a href="https://github.com/whiplashx" target="_blank">github.com/whiplashx</a>
+            </div>
+
+            <div class="contact-item">
+                <span class="contact-label">twitter:</span>
+                <a href="https://twitter.com/whiplashx" target="_blank">@whiplashx</a>
+            </div>
+
+            <div class="contact-item">
+                <span class="contact-label">linkedin:</span>
+                <a href="https://linkedin.com/in/whiplashx" target="_blank">linkedin.com/in/whiplashx</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>
+                <span class="prompt">$</span> whoami<br>
+                <span style="color: #00ff41;">whiplashx</span><br><br>
+                © 2026 whiplashx. All rights reserved.
+            </p>
+        </div>
+    </div>
+</body>
+</html>

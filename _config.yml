@@ -1,0 +1,10 @@
+title: whiplashx
+description: A minimalist terminal portfolio
+author: whiplashx
+theme: jekyll-theme-minimal
+baseurl: ""
+url: "https://whiplashx.github.io"
+
+# Build settings
+markdown: kramdown
+permalink: /:title/
