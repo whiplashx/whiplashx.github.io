@@ -3,314 +3,1182 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>whiplashx ~ portfolio</title>
+    <meta name="color-scheme" content="dark">
+    <title>Josh Neiel C. Manalo | Terminal Portfolio</title>
     <style>
+        :root {
+            --bg: #000000;
+            --panel: rgba(3, 12, 6, 0.86);
+            --panel-strong: rgba(5, 20, 10, 0.96);
+            --line: rgba(70, 255, 120, 0.2);
+            --green: #33ff5e;
+            --green-deep: #1c9e3c;
+            --green-soft: #b6ffca;
+            --accent: #ffcf6b;
+            --text: #d3ffe0;
+            --muted: #7da78a;
+            --danger: #ff6b6b;
+            --warning: #ffd166;
+            --shadow: 0 0 18px rgba(51, 255, 94, 0.2);
+        }
+
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+        }
+
+        html, body {
+            min-height: 100%;
         }
 
         body {
-            background-color: #0a0e27;
-            color: #00ff41;
-            font-family: 'Courier New', 'Courier', monospace;
-            line-height: 1.6;
-            font-size: 14px;
-            overflow-x: hidden;
+            background: var(--bg);
+            color: var(--text);
+            font-family: "JetBrains Mono", "Courier New", Courier, monospace;
+            overflow: hidden;
+            text-rendering: optimizeLegibility;
+        }
+
+        body::before,
+        body::after {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        body::before {
+            background: linear-gradient(rgba(255, 255, 255, 0.03) 50%, transparent 50%);
+            background-size: 100% 4px;
+            opacity: 0.09;
+            mix-blend-mode: screen;
+        }
+
+        body::after {
+            background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.72) 100%);
+        }
+
+        #matrix {
+            position: fixed;
+            inset: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 0;
+            display: block;
+            background: radial-gradient(circle at top, rgba(28, 158, 60, 0.1), transparent 40%);
+        }
+
+        .shell {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 2rem 1rem;
         }
 
         .terminal {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 40px 20px;
-            min-height: 100vh;
+            width: min(1100px, 100%);
+            height: min(92vh, 980px);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(102, 255, 153, 0.2);
+            border-radius: 18px;
+            overflow: hidden;
+            background: linear-gradient(180deg, rgba(4, 16, 8, 0.82), rgba(1, 7, 3, 0.94));
+            box-shadow: 0 0 0 1px rgba(51, 255, 94, 0.08), 0 25px 80px rgba(0, 0, 0, 0.7), var(--shadow);
+            backdrop-filter: blur(8px);
         }
 
-        .header {
+        .terminal.hackermode {
+            --green: #ff4d4d;
+            --green-deep: #a61f1f;
+            --green-soft: #ffd1d1;
+            --accent: #ffd166;
+            --shadow: 0 0 18px rgba(255, 77, 77, 0.2);
+        }
+
+        .chrome {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            padding: 0.85rem 1rem;
+            background: rgba(1, 7, 3, 0.92);
+            border-bottom: 1px solid var(--line);
+        }
+
+        .dots {
+            display: flex;
+            gap: 0.45rem;
+            align-items: center;
+            min-width: 74px;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 999px;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
+        }
+
+        .dot.red { background: #ff5f57; }
+        .dot.yellow { background: #febc2e; }
+        .dot.green { background: #28c840; }
+
+        .chrome-title {
+            color: var(--green-soft);
+            font-size: 0.82rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            opacity: 0.95;
             text-align: center;
-            margin-bottom: 50px;
-            border-bottom: 2px solid #00ff41;
-            padding-bottom: 30px;
+            flex: 1;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
         }
 
-        .ascii-art {
-            font-size: 12px;
+        .chrome-status {
+            min-width: 74px;
+            text-align: right;
+            color: var(--accent);
+            font-size: 0.76rem;
+            letter-spacing: 0.08em;
+        }
+
+        .terminal-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        .output {
+            flex: 1;
+            overflow: auto;
+            padding: 1.3rem 1.2rem 1rem;
+            scrollbar-color: rgba(51, 255, 94, 0.45) transparent;
+            scrollbar-width: thin;
+        }
+
+        .output::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        .output::-webkit-scrollbar-thumb {
+            background: rgba(51, 255, 94, 0.3);
+            border-radius: 999px;
+        }
+
+        .line {
+            margin-bottom: 0.7rem;
+            line-height: 1.7;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .line.muted { color: var(--muted); }
+        .line.green { color: var(--green); text-shadow: 0 0 8px rgba(51, 255, 94, 0.26); }
+        .line.soft { color: var(--green-soft); }
+        .line.accent { color: var(--accent); }
+        .line.warn { color: var(--warning); }
+        .line.danger { color: var(--danger); }
+
+        .banner {
+            color: var(--green-soft);
+            text-shadow: 0 0 8px rgba(182, 255, 202, 0.22), 0 0 18px rgba(51, 255, 94, 0.15);
+            font-size: clamp(0.62rem, 1.3vw, 0.88rem);
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+            margin-bottom: 1rem;
             white-space: pre;
             overflow-x: auto;
-            margin-bottom: 20px;
-            color: #00ff41;
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.3);
         }
 
-        h1 {
-            font-size: 32px;
-            margin: 20px 0 10px;
-            color: #00ff41;
-            text-shadow: 0 0 10px rgba(0, 255, 65, 0.5);
+        .welcome {
+            display: grid;
+            gap: 0.35rem;
+            margin-bottom: 1rem;
         }
 
-        .subtitle {
-            color: #888;
-            font-size: 12px;
-            margin-top: 10px;
+        .welcome strong {
+            color: var(--green-soft);
         }
 
-        .nav {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            margin-bottom: 50px;
-            flex-wrap: wrap;
+        .cards {
+            display: grid;
+            gap: 0.9rem;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            margin: 0.85rem 0 0.3rem;
         }
 
-        .nav a {
-            color: #00ff41;
-            text-decoration: none;
-            border: 1px solid #00ff41;
-            padding: 8px 16px;
-            transition: all 0.3s ease;
-            cursor: pointer;
+        .card {
+            border: 1px solid rgba(51, 255, 94, 0.16);
+            background: rgba(3, 14, 7, 0.6);
+            border-radius: 12px;
+            padding: 0.9rem 1rem;
+            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
         }
 
-        .nav a:hover {
-            background-color: #00ff41;
-            color: #0a0e27;
-            box-shadow: 0 0 10px rgba(0, 255, 65, 0.6);
-        }
-
-        .section {
-            margin-bottom: 60px;
-        }
-
-        .section-title {
-            color: #00ff41;
-            font-size: 18px;
-            margin-bottom: 20px;
+        .card-title {
+            margin-bottom: 0.5rem;
+            color: var(--accent);
             text-transform: uppercase;
-            border-left: 2px solid #00ff41;
-            padding-left: 10px;
+            letter-spacing: 0.12em;
+            font-size: 0.78rem;
         }
 
-        .project {
-            margin-bottom: 30px;
-            padding: 15px;
-            border-left: 1px solid #00ff41;
-            padding-left: 20px;
-        }
-
-        .project-title {
-            color: #00ff41;
-            font-weight: bold;
-            margin-bottom: 5px;
-        }
-
-        .project-desc {
-            color: #aaa;
-            margin-bottom: 8px;
-            font-size: 13px;
-        }
-
-        .project-tags {
+        .tags {
             display: flex;
-            gap: 8px;
             flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-top: 0.5rem;
         }
 
         .tag {
-            background-color: rgba(0, 255, 65, 0.1);
-            color: #00ff41;
-            padding: 3px 8px;
-            border-radius: 3px;
-            font-size: 11px;
-            border: 1px solid #00ff41;
+            display: inline-flex;
+            align-items: center;
+            padding: 0.22rem 0.55rem;
+            border-radius: 999px;
+            border: 1px solid rgba(255, 207, 107, 0.35);
+            background: rgba(255, 207, 107, 0.08);
+            color: var(--accent);
+            font-size: 0.72rem;
         }
 
-        .contact-item {
-            margin-bottom: 15px;
-            padding: 10px;
-            border-bottom: 1px solid #333;
+        .project-list,
+        .history-list {
+            display: grid;
+            gap: 0.75rem;
         }
 
-        .contact-label {
-            color: #00ff41;
-            font-weight: bold;
-            margin-right: 10px;
+        .project {
+            border-left: 2px solid rgba(51, 255, 94, 0.3);
+            padding: 0.7rem 0.9rem 0.7rem 1rem;
+            background: rgba(4, 16, 8, 0.32);
+            border-radius: 0 10px 10px 0;
         }
 
-        a {
-            color: #00ff41;
-            text-decoration: underline;
+        .project-head {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 0.7rem;
+            align-items: baseline;
+            margin-bottom: 0.35rem;
         }
 
-        a:hover {
-            color: #00ffff;
-            text-shadow: 0 0 5px rgba(0, 255, 255, 0.5);
+        .project-name {
+            color: var(--green-soft);
+            font-weight: 700;
         }
 
-        .footer {
-            text-align: center;
-            margin-top: 80px;
-            padding-top: 30px;
-            border-top: 2px solid #00ff41;
-            color: #888;
-            font-size: 12px;
+        .project-meta {
+            color: var(--muted);
+            font-size: 0.88rem;
+        }
+
+        .project-desc,
+        .history-item,
+        .contact-row,
+        .help-grid,
+        .details-list,
+        .skills-grid {
+            color: #cae9d0;
+        }
+
+        .project-link,
+        .contact-link,
+        .help-link {
+            color: var(--green);
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(51, 255, 94, 0.35);
+        }
+
+        .project-link:hover,
+        .contact-link:hover,
+        .help-link:hover {
+            color: #ffffff;
+            border-bottom-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .help-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 0.5rem 0.9rem;
+            margin-top: 0.55rem;
+        }
+
+        .help-item {
+            appearance: none;
+            border: 1px solid rgba(51, 255, 94, 0.14);
+            border-radius: 10px;
+            background: rgba(3, 14, 7, 0.42);
+            color: inherit;
+            text-align: left;
+            font: inherit;
+            cursor: pointer;
+            padding: 0.45rem 0.6rem;
+        }
+
+        .help-item:hover {
+            border-color: rgba(51, 255, 94, 0.35);
+            background: rgba(6, 22, 11, 0.62);
+        }
+
+        .help-item code,
+        .command-chip {
+            color: var(--accent);
+            font-size: 0.92em;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.8rem;
+        }
+
+        .skills-group {
+            padding: 0.85rem 0.9rem;
+            border: 1px solid rgba(51, 255, 94, 0.16);
+            border-radius: 12px;
+            background: rgba(3, 14, 7, 0.55);
+        }
+
+        .skills-label {
+            color: var(--green-soft);
+            margin-bottom: 0.45rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            font-size: 0.74rem;
+        }
+
+        .skills-list,
+        .details-list,
+        .history-list,
+        .contact-list {
+            list-style: none;
+            display: grid;
+            gap: 0.45rem;
+        }
+
+        .details-list li::before,
+        .skills-list li::before,
+        .history-list li::before,
+        .contact-list li::before {
+            content: "> ";
+            color: var(--green);
+        }
+
+        .split {
+            display: grid;
+            gap: 0.9rem;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        }
+
+        .section {
+            margin-bottom: 1rem;
+        }
+
+        .section-title {
+            color: var(--green-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            margin-bottom: 0.7rem;
+            font-size: 0.82rem;
+        }
+
+        .command-line {
+            display: flex;
+            align-items: center;
+            gap: 0.65rem;
+            padding: 0.92rem 1rem;
+            border-top: 1px solid var(--line);
+            background: rgba(1, 7, 3, 0.94);
         }
 
         .prompt {
-            color: #888;
+            color: var(--green);
+            white-space: nowrap;
+            text-shadow: 0 0 8px rgba(51, 255, 94, 0.35);
         }
 
-        @media (max-width: 600px) {
-            h1 {
-                font-size: 24px;
-            }
-
-            .nav {
-                gap: 15px;
-            }
-
-            .ascii-art {
-                font-size: 10px;
-            }
+        .command-input {
+            flex: 1;
+            min-width: 0;
+            border: 0;
+            outline: 0;
+            background: transparent;
+            color: var(--green-soft);
+            font: inherit;
+            caret-color: var(--green-soft);
         }
 
-        /* Cursor animation */
+        .caret-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .caret {
+            pointer-events: none;
+            display: none;
+        }
+
+        .command-input::placeholder {
+            color: rgba(182, 255, 202, 0.35);
+        }
+
+        .input-hint {
+            color: var(--muted);
+            font-size: 0.8rem;
+            white-space: nowrap;
+        }
+
+        .blip {
+            color: var(--accent);
+        }
+
+        .terminal a {
+            color: inherit;
+        }
+
         @keyframes blink {
-            0%, 50% { opacity: 1; }
-            51%, 100% { opacity: 0; }
+            0%, 49% { opacity: 1; }
+            50%, 100% { opacity: 0; }
         }
 
-        .cursor {
-            display: inline-block;
-            width: 10px;
-            height: 1.2em;
-            background-color: #00ff41;
-            animation: blink 1s infinite;
-            margin-left: 5px;
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .line,
+        .project,
+        .card,
+        .help-item,
+        .skills-group {
+            animation: fadeInUp 0.35s ease both;
+        }
+
+        @media (max-width: 780px) {
+            .shell {
+                padding: 0;
+            }
+
+            .terminal {
+                width: 100%;
+                height: 100vh;
+                border-radius: 0;
+                border-left: 0;
+                border-right: 0;
+            }
+
+            .chrome {
+                gap: 0.5rem;
+                padding: 0.75rem 0.85rem;
+            }
+
+            .chrome-title {
+                font-size: 0.72rem;
+            }
+
+            .chrome-status {
+                display: none;
+            }
+
+            .output {
+                padding: 1rem 0.9rem 0.9rem;
+            }
+
+            .command-line {
+                flex-wrap: wrap;
+                gap: 0.5rem;
+            }
+
+            .input-hint {
+                width: 100%;
+                white-space: normal;
+            }
+
+            .banner {
+                font-size: 0.6rem;
+            }
         }
     </style>
 </head>
 <body>
-    <div class="terminal">
-        <div class="header">
-            <div class="ascii-art">
-    ╔═══════════════════════════════╗
-    ║     WHIPLASHX ~ PORTFOLIO     ║
-    ╚═══════════════════════════════╝
-            </div>
-            <h1>> whiplashx</h1>
-            <p class="subtitle">// minimalist developer portfolio</p>
-        </div>
-
-        <div class="nav">
-            <a href="#about">about</a>
-            <a href="#projects">projects</a>
-            <a href="#skills">skills</a>
-            <a href="#contact">contact</a>
-        </div>
-
-        <div id="about" class="section">
-            <div class="section-title">> about</div>
-            <p>
-                <span class="prompt">$</span> cat profile.txt
-            </p>
-            <p style="margin-top: 15px; color: #aaa;">
-                A passionate developer crafting elegant solutions to complex problems.
-                Specializing in full-stack development with a minimalist design philosophy.
-            </p>
-        </div>
-
-        <div id="projects" class="section">
-            <div class="section-title">> projects</div>
-            
-            <div class="project">
-                <div class="project-title">[ project_one ]</div>
-                <div class="project-desc">Description of your first project goes here.</div>
-                <div class="project-tags">
-                    <span class="tag">javascript</span>
-                    <span class="tag">web</span>
-                    <span class="tag">responsive</span>
+    <canvas id="matrix" aria-hidden="true"></canvas>
+    <main class="shell">
+        <section class="terminal" id="terminal">
+            <header class="chrome">
+                <div class="dots" aria-hidden="true">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
                 </div>
-            </div>
+                <div class="chrome-title">joshneiel@portfolio :: interactive terminal</div>
+                <div class="chrome-status" id="statusChip">ONLINE</div>
+            </header>
 
-            <div class="project">
-                <div class="project-title">[ project_two ]</div>
-                <div class="project-desc">Description of your second project goes here.</div>
-                <div class="project-tags">
-                    <span class="tag">python</span>
-                    <span class="tag">backend</span>
-                    <span class="tag">api</span>
+            <div class="terminal-body">
+                <div class="output" id="output" aria-live="polite"></div>
+
+                <form class="command-line" id="commandForm" autocomplete="off">
+                    <span class="prompt" id="promptText">joshneiel@portfolio:~$</span>
+                    <span class="caret-wrap">
+                        <input id="commandInput" class="command-input" type="text" inputmode="text" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Terminal command input" placeholder="type a command...">
+                        <span class="caret" aria-hidden="true"></span>
+                    </span>
+                    <span class="input-hint">enter to run, ↑↓ for history</span>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <script>
+        const profile = {
+            asciiBanner: [
+                "   ██╗   ██╗  ██████╗  ███████╗ ██╗  ██╗",
+                "   ██║   ██║ ██╔═══██╗ ██╔════╝ ██║  ██║",
+                "   ██║   ██║ ██║   ██║ ███████╗ ███████║",
+                "   ╚██╗ ██╔╝ ██║   ██║ ╚════██║ ██╔══██║",
+                "    ╚████╔╝  ╚██████╔╝ ███████║ ██║  ██║",
+                "     ╚═══╝    ╚═════╝  ╚══════╝ ╚═╝  ╚═╝"
+            ].join("\n"),
+            welcomeMessage: "Welcome to the personal portfolio of Josh Neiel C. Manalo. (Version 2.0.0)",
+            subtitle: "Software Developer · Full-Stack Web Developer · Philippines",
+            helpHint: "Type 'help' to see the list of available commands.",
+            person: {
+                name: "Josh Neiel C. Manalo",
+                title: "Software Developer | Full-Stack Web Developer",
+                location: "Philippines",
+                phone: "0946 335 2484",
+                email: "joshneiel.manalo102403@gmail.com",
+                github: "github.com/whiplashx",
+                education: "BS Information Technology, Mindoro State University – Bongabong Campus, Magna Cum Laude",
+                summary: "Software Developer with hands-on experience designing, developing, testing, and deploying scalable web applications using React, Laravel, MySQL, PHP, and C#. Skilled in debugging, database optimization, API integration, and production maintenance. Strong foundation in OOP, SDLC, and Agile development."
+            },
+            skills: {
+                Programming: ["PHP", "JavaScript", "C#", "Python"],
+                Frontend: ["React", "HTML", "CSS", "Tailwind"],
+                Backend: ["Laravel", "REST APIs"],
+                Database: ["MySQL", "Firebase"],
+                Tools: ["Git", "GitHub", "Postman", "VS Code"],
+                Infrastructure: ["Linux", "SSH", "Hostinger", "Cloudflare Tunnel"]
+            },
+            experience: [
+                {
+                    title: "Full-Stack Web Developer",
+                    company: "Freelance / Academic Projects",
+                    period: "2023 – Present",
+                    bullets: [
+                        "Developed, implemented, and maintained 3+ production-ready full-stack web applications using React, Laravel, MySQL, and RESTful APIs, improving organizational workflows by ~30%.",
+                        "Designed and optimized relational database schemas and backend services for concurrent users and scalability.",
+                        "Configured, deployed, and maintained production applications on Hostinger and on-premises Linux servers via SSH and Cloudflare Tunnel.",
+                        "Collaborated using Git/GitHub with branching strategies that reduced merge conflicts.",
+                        "Integrated third-party APIs and business logic to meet client requirements.",
+                        "Performed application testing, debugging, and optimization before deployment."
+                    ]
+                },
+                {
+                    title: "Full-Stack Web Developer Intern (OJT)",
+                    company: "Arbitrage Incorporated",
+                    period: "2026",
+                    bullets: [
+                        "Development team lead for a 4–6 member Agile team, coordinating tasks and sprint delivery.",
+                        "Mentored fellow developers across frontend, backend, and database implementation.",
+                        "Built and maintained frontend/backend features to coding standards.",
+                        "Collaborated on sprint planning, code reviews, and deployments.",
+                        "Performed debugging, testing, and issue resolution for software quality.",
+                        "Supported QA testing, release validation, and production deployment."
+                    ]
+                }
+            ],
+            projects: [
+                {
+                    name: "iMap – Web-Based Mapping System",
+                    tag: "Best Capstone",
+                    stack: ["React", "Laravel", "MySQL", "ArcGIS ESRI JS API", "Vite"],
+                    period: "Jan 2025 – May 2026",
+                    employer: "Mindoro State University – Bongabong Campus (Capstone Project)",
+                    link: "https://imap-plotter.com",
+                    description: "GIS web app for visualizing and managing lot subdivisions; interactive parcel search/analysis, real-time visualization, dynamic layer controls, concurrent multi-user access."
+                },
+                {
+                    name: "Cabinetuan Information System",
+                    tag: "CRM + Quotation & Billing",
+                    stack: ["PHP", "MySQL", "HTML", "CSS", "JavaScript", "Bootstrap"],
+                    period: "Jul 2025 – Feb 2026",
+                    employer: "Cabinetuan Modular Cabinet",
+                    link: "https://cabinetuan.com",
+                    description: "Digitized records/retrieval; mailed customer inquiries; customizable quotation & invoice generation with modular cabinet components priced from bill of materials."
+                },
+                {
+                    name: "AccSys – Accreditation Compliance System",
+                    tag: "University Accreditation",
+                    stack: ["Laravel", "PHP", "MySQL", "React", "LLM API (FastAPI + Ollama)"],
+                    period: "Nov 2024 – Nov 2025",
+                    employer: "Mindoro State University – Bongabong Campus",
+                    link: null,
+                    description: "AACCUP accreditation management: document management, scheduling, evaluation, report generation, role-based workflows, plus a local document-analysis chatbot."
+                },
+                {
+                    name: "Roomify",
+                    tag: "IoT Room Monitoring",
+                    stack: ["PHP", "MySQL", "JavaScript", "Tailwind", "FastAPI", "WebSockets", "Debian on-prem server"],
+                    period: "Oct 2025 – Dec 2025",
+                    employer: "Academic Project (Senior Year)",
+                    link: null,
+                    description: "Room rental/monitoring platform with booking management and an IoT-camera-based image processing API for student counting."
+                },
+                {
+                    name: "Arbitrage OJT Monitoring System",
+                    tag: "Trainee Monitoring",
+                    stack: ["PHP", "Laravel", "React", "MySQL"],
+                    period: "Mar 2026 – Apr 2026",
+                    employer: "Arbitrage Incorporated",
+                    link: null,
+                    description: "Monitors OJT trainees: attendance, progress reports, evaluations, supervisor feedback."
+                },
+                {
+                    name: "Arbitrage CMS & E-Commerce Platform",
+                    tag: "CMS + E-Commerce",
+                    stack: ["PHP", "Laravel", "MySQL", "React", "PayPal API", "Cloudflare Tunnel", "Hostinger"],
+                    period: "Aug 2024 – Oct 2024",
+                    employer: "Arbitrage Incorporated",
+                    link: null,
+                    description: "CMS + e-commerce for computer products: product catalog, order processing, user management, PayPal payment integration."
+                },
+                {
+                    name: "Jopats Resort Reservation System",
+                    tag: "Online Reservations",
+                    stack: ["Next.js", "Firebase", "TypeScript"],
+                    period: "Jan 2024 – Apr 2024",
+                    employer: "Academic Project",
+                    link: null,
+                    description: "Resort booking system with admin reservation management and a points-based rewards/voucher system."
+                },
+                {
+                    name: "Tamaride",
+                    tag: "Mobile Transportation App",
+                    stack: ["Flutter", "Dart", "Firebase"],
+                    period: "May 2025",
+                    employer: "Academic Project",
+                    link: null,
+                    description: "Flutter mobile app for booking rides with an intuitive passenger UX."
+                },
+                {
+                    name: "Java POS System",
+                    tag: "In Progress",
+                    stack: ["Java", "Spring Boot", "Spring Security", "JWT", "React", "TypeScript", "MySQL"],
+                    period: "Jun 2026 – Present",
+                    employer: "Personal Learning Project",
+                    link: null,
+                    description: "Modern POS with JWT auth, inventory/product/user management, RESTful APIs."
+                }
+            ],
+            certifications: [
+                "Cisco Networking Academy – Ethical Hacker",
+                "Python Programming 2 – CodeChum"
+            ],
+            terminalPrompt: "joshneiel@portfolio:~$",
+            commands: [
+                { label: "about", alias: "a" },
+                { label: "skills", alias: "s" },
+                { label: "experience", alias: "exp" },
+                { label: "projects", alias: "pj", note: "supports 'projects <number>' for full detail" },
+                { label: "education", alias: "edu" },
+                { label: "resume", alias: "cv" },
+                { label: "contact", alias: "c" },
+                { label: "clear", alias: null }
+            ],
+            easterEggs: {
+                hackermode: "Toggles theme to red, 'Hackermode activated.'",
+                sudo: "Nice try. This incident will be reported."
+            }
+        };
+
+        const output = document.getElementById("output");
+        const form = document.getElementById("commandForm");
+        const input = document.getElementById("commandInput");
+        const promptText = document.getElementById("promptText");
+        const terminal = document.getElementById("terminal");
+        const statusChip = document.getElementById("statusChip");
+        const matrixCanvas = document.getElementById("matrix");
+        const matrixContext = matrixCanvas.getContext("2d");
+
+        const history = [];
+        let historyIndex = -1;
+        let hackermode = false;
+
+        const commandMap = new Map([
+            ["about", "about"], ["a", "about"],
+            ["skills", "skills"], ["s", "skills"],
+            ["experience", "experience"], ["exp", "experience"],
+            ["projects", "projects"], ["pj", "projects"],
+            ["education", "education"], ["edu", "education"],
+            ["resume", "resume"], ["cv", "resume"],
+            ["contact", "contact"], ["c", "contact"],
+            ["clear", "clear"],
+            ["help", "help"],
+            ["hackermode", "hackermode"],
+            ["sudo", "sudo"]
+        ]);
+
+        const katakana = [
+            "ア","イ","ウ","エ","オ","カ","キ","ク","ケ","コ",
+            "サ","シ","ス","セ","ソ","タ","チ","ツ","テ","ト",
+            "ナ","ニ","ヌ","ネ","ノ","ハ","ヒ","フ","ヘ","ホ",
+            "マ","ミ","ム","メ","モ","ヤ","ユ","ヨ","ラ","リ",
+            "ル","レ","ロ","ワ","ヲ","ン","0","1","2","3","4","5","6","7","8","9","#","@","%","&","*","+","-","=","/","\\"
+        ];
+
+        function escapeHtml(value) {
+            return String(value)
+                .replaceAll("&", "&amp;")
+                .replaceAll("<", "&lt;")
+                .replaceAll(">", "&gt;")
+                .replaceAll('"', "&quot;");
+        }
+
+        function scrollToBottom() {
+            output.scrollTop = output.scrollHeight;
+        }
+
+        function appendLine(html, className = "line") {
+            const node = document.createElement("div");
+            node.className = className;
+            node.innerHTML = html;
+            output.appendChild(node);
+            scrollToBottom();
+            return node;
+        }
+
+        function appendBlock(className, innerHTML) {
+            const node = document.createElement("div");
+            node.className = className;
+            node.innerHTML = innerHTML;
+            output.appendChild(node);
+            scrollToBottom();
+            return node;
+        }
+
+        function renderIntro() {
+            appendLine(`<div class="banner">${escapeHtml(profile.asciiBanner)}</div>`, "line green");
+            appendLine(`<strong class="soft">${escapeHtml(profile.welcomeMessage)}</strong>`, "line soft welcome");
+            appendLine(escapeHtml(profile.subtitle), "line muted");
+            appendLine(`<span class="blip">${escapeHtml(profile.helpHint)}</span>`, "line accent");
+            appendLine(`Session initialized. Type <span class="command-chip">help</span> to list commands.`, "line muted");
+        }
+
+        function renderHelp() {
+            const commands = profile.commands.map((command) => {
+                const alias = command.alias ? ` <span class="muted">[alias: ${escapeHtml(command.alias)}]</span>` : "";
+                const note = command.note ? `<div class="muted">${escapeHtml(command.note)}</div>` : "";
+                return `<button type="button" class="help-item" data-command="${escapeHtml(command.label)}"><code>${escapeHtml(command.label)}</code>${alias}${note}</button>`;
+            }).join("");
+
+            appendBlock("line", `
+                <div class="section-title">available commands</div>
+                <div class="help-grid">${commands}</div>
+                <div class="line muted" style="margin-top:0.85rem;">Tip: use <span class="command-chip">projects &lt;number&gt;</span> for full project details.</div>
+            `);
+        }
+
+        function renderAbout() {
+            appendBlock("line", `
+                <div class="section-title">about</div>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-title">identity</div>
+                        <div class="details-list">
+                            <li>${escapeHtml(profile.person.name)}</li>
+                            <li>${escapeHtml(profile.person.title)}</li>
+                            <li>${escapeHtml(profile.person.location)}</li>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">summary</div>
+                        <div>${escapeHtml(profile.person.summary)}</div>
+                    </div>
                 </div>
-            </div>
+            `);
+        }
 
-            <div class="project">
-                <div class="project-title">[ project_three ]</div>
-                <div class="project-desc">Description of your third project goes here.</div>
-                <div class="project-tags">
-                    <span class="tag">react</span>
-                    <span class="tag">fullstack</span>
-                    <span class="tag">database</span>
-                </div>
-            </div>
-        </div>
-
-        <div id="skills" class="section">
-            <div class="section-title">> skills</div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-top: 20px;">
-                <div>
-                    <div style="color: #00ff41; margin-bottom: 10px; font-weight: bold;">languages</div>
-                    <ul style="list-style: none; color: #aaa;">
-                        <li>• JavaScript</li>
-                        <li>• Python</li>
-                        <li>• TypeScript</li>
-                        <li>• CSS/HTML</li>
+        function renderSkills() {
+            const groups = Object.entries(profile.skills).map(([label, items]) => `
+                <div class="skills-group">
+                    <div class="skills-label">${escapeHtml(label)}</div>
+                    <ul class="skills-list">
+                        ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
                     </ul>
                 </div>
-                <div>
-                    <div style="color: #00ff41; margin-bottom: 10px; font-weight: bold;">tools & frameworks</div>
-                    <ul style="list-style: none; color: #aaa;">
-                        <li>• React</li>
-                        <li>• Node.js</li>
-                        <li>• Git</li>
-                        <li>• Docker</li>
+            `).join("");
+
+            appendBlock("line", `
+                <div class="section-title">skills</div>
+                <div class="skills-grid">${groups}</div>
+            `);
+        }
+
+        function renderExperience() {
+            const items = profile.experience.map((entry) => `
+                <div class="project">
+                    <div class="project-head">
+                        <div class="project-name">${escapeHtml(entry.title)}</div>
+                        <div class="project-meta">${escapeHtml(entry.company)} · ${escapeHtml(entry.period)}</div>
+                    </div>
+                    <ul class="history-list">
+                        ${entry.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}
                     </ul>
                 </div>
-            </div>
-        </div>
+            `).join("");
 
-        <div id="contact" class="section">
-            <div class="section-title">> contact</div>
-            
-            <div class="contact-item">
-                <span class="contact-label">email:</span>
-                <a href="mailto:your.email@example.com">your.email@example.com</a>
-            </div>
+            appendBlock("line", `
+                <div class="section-title">experience</div>
+                <div class="history-list">${items}</div>
+            `);
+        }
 
-            <div class="contact-item">
-                <span class="contact-label">github:</span>
-                <a href="https://github.com/whiplashx" target="_blank">github.com/whiplashx</a>
-            </div>
+        function renderProjects(detailIndex = null) {
+            if (detailIndex !== null) {
+                const project = profile.projects[detailIndex];
+                if (!project) {
+                    appendLine(`Project ${detailIndex + 1} not found. Use <span class="command-chip">projects</span> to list all entries.`, "line warn");
+                    return;
+                }
 
-            <div class="contact-item">
-                <span class="contact-label">twitter:</span>
-                <a href="https://twitter.com/whiplashx" target="_blank">@whiplashx</a>
-            </div>
+                appendBlock("line", `
+                    <div class="section-title">project ${detailIndex + 1}</div>
+                    <div class="project">
+                        <div class="project-head">
+                            <div class="project-name">${escapeHtml(project.name)}</div>
+                            <div class="tag">${escapeHtml(project.tag)}</div>
+                        </div>
+                        <div class="project-meta">${escapeHtml(project.period)} · ${escapeHtml(project.employer)}</div>
+                        <div class="project-desc" style="margin-top:0.5rem;">${escapeHtml(project.description)}</div>
+                        <div class="tags">${project.stack.map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
+                        ${project.link ? `<div style="margin-top:0.7rem;"><a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.link)}</a></div>` : ""}
+                    </div>
+                `);
+                return;
+            }
 
-            <div class="contact-item">
-                <span class="contact-label">linkedin:</span>
-                <a href="https://linkedin.com/in/whiplashx" target="_blank">linkedin.com/in/whiplashx</a>
-            </div>
-        </div>
+            const list = profile.projects.map((project, index) => `
+                <div class="project">
+                    <div class="project-head">
+                        <div class="project-name">${index + 1}. ${escapeHtml(project.name)}</div>
+                        <div class="tag">${escapeHtml(project.tag)}</div>
+                    </div>
+                    <div class="project-meta">${escapeHtml(project.period)} · ${escapeHtml(project.employer)}</div>
+                    <div class="project-desc" style="margin-top:0.5rem;">${escapeHtml(project.description)}</div>
+                    <div class="tags">${project.stack.map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
+                    ${project.link ? `<div style="margin-top:0.7rem;"><a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.link)}</a></div>` : ""}
+                </div>
+            `).join("");
 
-        <div class="footer">
-            <p>
-                <span class="prompt">$</span> whoami<br>
-                <span style="color: #00ff41;">whiplashx</span><br><br>
-                © 2026 whiplashx. All rights reserved.
-            </p>
-        </div>
-    </div>
+            appendBlock("line", `
+                <div class="section-title">projects</div>
+                <div class="project-list">${list}</div>
+            `);
+        }
+
+        function renderEducation() {
+            appendBlock("line", `
+                <div class="section-title">education</div>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-title">degree</div>
+                        <div>${escapeHtml(profile.person.education)}</div>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">certifications</div>
+                        <ul class="details-list">
+                            ${profile.certifications.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+                        </ul>
+                    </div>
+                </div>
+            `);
+        }
+
+        function renderResume() {
+            appendBlock("line", `
+                <div class="section-title">resume</div>
+                <div class="split">
+                    <div class="card">
+                        <div class="card-title">contact</div>
+                        <ul class="contact-list">
+                            <li><span class="muted">phone:</span> ${escapeHtml(profile.person.phone)}</li>
+                            <li><span class="muted">email:</span> <a class="contact-link" href="mailto:${escapeHtml(profile.person.email)}">${escapeHtml(profile.person.email)}</a></li>
+                            <li><span class="muted">github:</span> <a class="contact-link" href="https://${escapeHtml(profile.person.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(profile.person.github)}</a></li>
+                            <li><span class="muted">location:</span> ${escapeHtml(profile.person.location)}</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">summary</div>
+                        <div>${escapeHtml(profile.person.summary)}</div>
+                    </div>
+                </div>
+                <div class="line muted" style="margin-top:0.8rem;">Resume details are presented inline; use <span class="command-chip">about</span>, <span class="command-chip">skills</span>, <span class="command-chip">experience</span>, and <span class="command-chip">projects</span> for sections.</div>
+            `);
+        }
+
+        function renderContact() {
+            appendBlock("line", `
+                <div class="section-title">contact</div>
+                <div class="cards">
+                    <div class="card">
+                        <div class="card-title">direct</div>
+                        <ul class="contact-list">
+                            <li><span class="muted">email:</span> <a class="contact-link" href="mailto:${escapeHtml(profile.person.email)}">${escapeHtml(profile.person.email)}</a></li>
+                            <li><span class="muted">phone:</span> ${escapeHtml(profile.person.phone)}</li>
+                            <li><span class="muted">github:</span> <a class="contact-link" href="https://${escapeHtml(profile.person.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(profile.person.github)}</a></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <div class="card-title">status</div>
+                        <div>Open for software development opportunities, collaboration, and project work.</div>
+                    </div>
+                </div>
+            `);
+        }
+
+        function renderClear() {
+            output.innerHTML = "";
+            renderIntro();
+        }
+
+        function toggleHackermode() {
+            hackermode = !hackermode;
+            terminal.classList.toggle("hackermode", hackermode);
+            statusChip.textContent = hackermode ? "HACKER MODE" : "ONLINE";
+            appendLine(hackermode ? "Hackermode activated." : "Hackermode deactivated.", "line danger");
+        }
+
+        function renderUnknown(command) {
+            appendLine(`Unknown command: <span class="warn">${escapeHtml(command)}</span>. Type <span class="command-chip">help</span> for available commands.`, "line warn");
+        }
+
+        function executeCommand(rawValue) {
+            const trimmed = rawValue.trim();
+
+            if (!trimmed) {
+                return;
+            }
+
+            appendLine(`<span class="prompt">${escapeHtml(profile.terminalPrompt)}</span> ${escapeHtml(trimmed)}`, "line green");
+
+            const [head, ...rest] = trimmed.toLowerCase().split(/\s+/);
+            const normalized = commandMap.get(head);
+
+            if (!normalized) {
+                if (head === "projects" && rest.length) {
+                    const index = Number.parseInt(rest[0], 10);
+                    if (Number.isFinite(index)) {
+                        renderProjects(index - 1);
+                        return;
+                    }
+                }
+                renderUnknown(trimmed);
+                return;
+            }
+
+            switch (normalized) {
+                case "help":
+                    renderHelp();
+                    break;
+                case "about":
+                    renderAbout();
+                    break;
+                case "skills":
+                    renderSkills();
+                    break;
+                case "experience":
+                    renderExperience();
+                    break;
+                case "projects": {
+                    if (rest.length) {
+                        const index = Number.parseInt(rest[0], 10);
+                        if (Number.isFinite(index)) {
+                            renderProjects(index - 1);
+                            break;
+                        }
+                    }
+                    renderProjects();
+                    break;
+                }
+                case "education":
+                    renderEducation();
+                    break;
+                case "resume":
+                    renderResume();
+                    break;
+                case "contact":
+                    renderContact();
+                    break;
+                case "clear":
+                    renderClear();
+                    break;
+                case "hackermode":
+                    toggleHackermode();
+                    break;
+                case "sudo":
+                    appendLine(profile.easterEggs.sudo, "line danger");
+                    break;
+                default:
+                    renderUnknown(trimmed);
+            }
+        }
+
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
+            const value = input.value;
+            if (!value.trim()) {
+                return;
+            }
+            history.push(value);
+            historyIndex = history.length;
+            executeCommand(value);
+            input.value = "";
+            input.focus();
+        });
+
+        input.addEventListener("keydown", (event) => {
+            if (event.key === "ArrowUp") {
+                event.preventDefault();
+                if (!history.length) {
+                    return;
+                }
+                historyIndex = Math.max(0, historyIndex - 1);
+                input.value = history[historyIndex] ?? "";
+                queueMicrotask(() => input.setSelectionRange(input.value.length, input.value.length));
+            }
+
+            if (event.key === "ArrowDown") {
+                event.preventDefault();
+                if (!history.length) {
+                    return;
+                }
+                historyIndex = Math.min(history.length, historyIndex + 1);
+                input.value = history[historyIndex] ?? "";
+                queueMicrotask(() => input.setSelectionRange(input.value.length, input.value.length));
+            }
+        });
+
+        output.addEventListener("click", (event) => {
+            const target = event.target instanceof Element ? event.target.closest("[data-command]") : null;
+            if (!target) {
+                return;
+            }
+
+            const command = target.getAttribute("data-command");
+            if (!command) {
+                return;
+            }
+
+            input.value = command;
+            input.focus();
+            form.requestSubmit();
+        });
+
+        function boot() {
+            renderIntro();
+            renderHelp();
+            input.focus();
+        }
+
+        function resizeMatrix() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            const dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+            matrixCanvas.width = Math.floor(width * dpr);
+            matrixCanvas.height = Math.floor(height * dpr);
+            matrixCanvas.style.width = `${width}px`;
+            matrixCanvas.style.height = `${height}px`;
+            matrixContext.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        const matrixState = {
+            columns: [],
+            fontSize: 18,
+            chars: katakana
+        };
+
+        function initMatrix() {
+            resizeMatrix();
+            const columns = Math.ceil(window.innerWidth / matrixState.fontSize);
+            matrixState.columns = Array.from({ length: columns }, () => ({
+                y: Math.random() * window.innerHeight,
+                speed: 0.7 + Math.random() * 1.9,
+                length: 8 + Math.floor(Math.random() * 28),
+                bright: Math.random() > 0.6
+            }));
+        }
+
+        function drawMatrix() {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+
+            matrixContext.fillStyle = "rgba(0, 0, 0, 0.08)";
+            matrixContext.fillRect(0, 0, width, height);
+
+            matrixContext.font = `${matrixState.fontSize}px "JetBrains Mono", monospace`;
+            matrixContext.textBaseline = "top";
+
+            matrixState.columns.forEach((column, index) => {
+                const x = index * matrixState.fontSize;
+                column.y += column.speed;
+
+                if (column.y > height + column.length * matrixState.fontSize) {
+                    column.y = -Math.random() * height * 0.5;
+                    column.speed = 0.7 + Math.random() * 1.9;
+                    column.length = 8 + Math.floor(Math.random() * 28);
+                    column.bright = Math.random() > 0.6;
+                }
+
+                for (let i = 0; i < column.length; i += 1) {
+                    const y = column.y - i * matrixState.fontSize;
+                    if (y < -matrixState.fontSize || y > height) {
+                        continue;
+                    }
+
+                    const isHead = i === 0;
+                    const alpha = Math.max(0.05, 1 - i / column.length);
+                    matrixContext.fillStyle = isHead
+                        ? `rgba(214, 255, 225, ${column.bright ? 1 : 0.8})`
+                        : `rgba(51, 255, 94, ${alpha * 0.7})`;
+
+                    const char = matrixState.chars[Math.floor(Math.random() * matrixState.chars.length)];
+                    matrixContext.fillText(char, x, y);
+                }
+            });
+
+            requestAnimationFrame(drawMatrix);
+        }
+
+        window.addEventListener("resize", () => {
+            initMatrix();
+        });
+
+        document.addEventListener("keydown", () => {
+            input.focus();
+        });
+
+        boot();
+        initMatrix();
+        drawMatrix();
+    </script>
 </body>
 </html>
