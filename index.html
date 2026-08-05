@@ -7,19 +7,19 @@
     <title>Josh Neiel C. Manalo |  Portfolio</title>
     <style>
         :root {
-            --bg: #000000;
-            --panel: rgba(3, 12, 6, 0.86);
-            --panel-strong: rgba(5, 20, 10, 0.96);
-            --line: rgba(70, 255, 120, 0.2);
-            --green: #33ff5e;
-            --green-deep: #1c9e3c;
-            --green-soft: #b6ffca;
-            --accent: #ffcf6b;
-            --text: #d3ffe0;
-            --muted: #7da78a;
-            --danger: #ff6b6b;
-            --warning: #ffd166;
-            --shadow: 0 0 18px rgba(51, 255, 94, 0.2);
+            --bg: #0b0c0d;
+            --panel: rgba(20, 21, 23, 0.9);
+            --panel-strong: rgba(28, 29, 31, 0.98);
+            --line: rgba(255, 255, 255, 0.12);
+            --green: #f3f4f6;
+            --green-deep: #c7c9cc;
+            --green-soft: #ffffff;
+            --accent: #d1d5db;
+            --text: #e5e7eb;
+            --muted: #9ca3af;
+            --danger: #fca5a5;
+            --warning: #f5f5f5;
+            --shadow: 0 0 18px rgba(255, 255, 255, 0.08);
         }
 
         * {
@@ -50,7 +50,7 @@
         }
 
         body::before {
-            background: linear-gradient(rgba(255, 255, 255, 0.03) 50%, transparent 50%);
+            background: linear-gradient(rgba(255, 255, 255, 0.025) 50%, transparent 50%);
             background-size: 100% 4px;
             opacity: 0.09;
             mix-blend-mode: screen;
@@ -61,13 +61,7 @@
         }
 
         #matrix {
-            position: fixed;
-            inset: 0;
-            width: 100vw;
-            height: 100vh;
-            z-index: 0;
-            display: block;
-            background: radial-gradient(circle at top, rgba(28, 158, 60, 0.1), transparent 40%);
+            display: none;
         }
 
         .shell {
@@ -84,20 +78,20 @@
             height: min(92vh, 980px);
             display: flex;
             flex-direction: column;
-            border: 1px solid rgba(102, 255, 153, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.14);
             border-radius: 18px;
             overflow: hidden;
-            background: linear-gradient(180deg, rgba(4, 16, 8, 0.82), rgba(1, 7, 3, 0.94));
-            box-shadow: 0 0 0 1px rgba(51, 255, 94, 0.08), 0 25px 80px rgba(0, 0, 0, 0.7), var(--shadow);
+            background: linear-gradient(180deg, rgba(24, 25, 27, 0.92), rgba(14, 15, 16, 0.98));
+            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 25px 80px rgba(0, 0, 0, 0.68), var(--shadow);
             backdrop-filter: blur(8px);
         }
 
         .terminal.hackermode {
-            --green: #ff4d4d;
-            --green-deep: #a61f1f;
-            --green-soft: #ffd1d1;
-            --accent: #ffd166;
-            --shadow: 0 0 18px rgba(255, 77, 77, 0.2);
+            --green: #f9fafb;
+            --green-deep: #ffffff;
+            --green-soft: #ffffff;
+            --accent: #f3f4f6;
+            --shadow: 0 0 18px rgba(255, 255, 255, 0.1);
         }
 
         .chrome {
@@ -124,9 +118,9 @@
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
         }
 
-        .dot.red { background: #ff5f57; }
-        .dot.yellow { background: #febc2e; }
-        .dot.green { background: #28c840; }
+        .dot.red { background: #8b8f97; }
+        .dot.yellow { background: #b6bac2; }
+        .dot.green { background: #e5e7eb; }
 
         .chrome-title {
             color: var(--green-soft);
@@ -160,7 +154,7 @@
             flex: 1;
             overflow: auto;
             padding: 1.3rem 1.2rem 1rem;
-            scrollbar-color: rgba(51, 255, 94, 0.45) transparent;
+            scrollbar-color: rgba(229, 231, 235, 0.45) transparent;
             scrollbar-width: thin;
         }
 
@@ -169,7 +163,7 @@
         }
 
         .output::-webkit-scrollbar-thumb {
-            background: rgba(51, 255, 94, 0.3);
+            background: rgba(229, 231, 235, 0.3);
             border-radius: 999px;
         }
 
@@ -181,7 +175,7 @@
         }
 
         .line.muted { color: var(--muted); }
-        .line.green { color: var(--green); text-shadow: 0 0 8px rgba(51, 255, 94, 0.26); }
+        .line.green { color: var(--green); text-shadow: none; }
         .line.soft { color: var(--green-soft); }
         .line.accent { color: var(--accent); }
         .line.warn { color: var(--warning); }
@@ -189,7 +183,7 @@
 
         .banner {
             color: var(--green-soft);
-            text-shadow: 0 0 8px rgba(182, 255, 202, 0.22), 0 0 18px rgba(51, 255, 94, 0.15);
+            text-shadow: none;
             font-size: clamp(0.62rem, 1.3vw, 0.88rem);
             letter-spacing: 0.05em;
             line-height: 1.2;
@@ -216,8 +210,8 @@
         }
 
         .card {
-            border: 1px solid rgba(51, 255, 94, 0.16);
-            background: rgba(3, 14, 7, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            background: rgba(255, 255, 255, 0.03);
             border-radius: 12px;
             padding: 0.9rem 1rem;
             box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
@@ -256,9 +250,9 @@
         }
 
         .project {
-            border-left: 2px solid rgba(51, 255, 94, 0.3);
+            border-left: 2px solid rgba(255, 255, 255, 0.24);
             padding: 0.7rem 0.9rem 0.7rem 1rem;
-            background: rgba(4, 16, 8, 0.32);
+            background: rgba(255, 255, 255, 0.02);
             border-radius: 0 10px 10px 0;
         }
 
@@ -283,7 +277,7 @@
         .project-desc,
         .history-item,
         .contact-row,
-        .help-grid,
+        .help-list,
         .details-list,
         .skills-grid {
             color: #cae9d0;
@@ -294,7 +288,7 @@
         .help-link {
             color: var(--green);
             text-decoration: none;
-            border-bottom: 1px dotted rgba(51, 255, 94, 0.35);
+            border-bottom: 1px dotted rgba(255, 255, 255, 0.35);
         }
 
         .project-link:hover,
@@ -304,28 +298,95 @@
             border-bottom-color: rgba(255, 255, 255, 0.7);
         }
 
-        .help-grid {
+        .help-list {
+            list-style: none;
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-            gap: 0.5rem 0.9rem;
+            gap: 0.7rem;
             margin-top: 0.55rem;
         }
 
         .help-item {
             appearance: none;
-            border: 1px solid rgba(51, 255, 94, 0.14);
-            border-radius: 10px;
-            background: rgba(3, 14, 7, 0.42);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 12px;
+            background: rgba(255, 255, 255, 0.03);
             color: inherit;
             text-align: left;
             font: inherit;
             cursor: pointer;
-            padding: 0.45rem 0.6rem;
+            padding: 0.7rem 0.85rem;
+            display: grid;
+            gap: 0.35rem;
         }
 
         .help-item:hover {
-            border-color: rgba(51, 255, 94, 0.35);
-            background: rgba(6, 22, 11, 0.62);
+            border-color: rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        .help-item-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.75rem;
+        }
+
+        .help-item-name {
+            color: var(--green-soft);
+            font-weight: 700;
+        }
+
+        .help-item-note {
+            color: var(--muted);
+            font-size: 0.88rem;
+            line-height: 1.5;
+        }
+
+        .terminal-result {
+            display: grid;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+            padding: 0.15rem 0 0.15rem 0.9rem;
+            border-left: 1px solid rgba(255, 255, 255, 0.16);
+        }
+
+        .terminal-result-title {
+            color: var(--green-soft);
+            text-transform: uppercase;
+            letter-spacing: 0.14em;
+            font-size: 0.82rem;
+        }
+
+        .terminal-result-body {
+            display: grid;
+            gap: 0.35rem;
+            color: #d7dadf;
+            line-height: 1.7;
+        }
+
+        .terminal-result-line {
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+
+        .terminal-result-list {
+            list-style: none;
+            display: grid;
+            gap: 0.35rem;
+            margin-top: 0.15rem;
+        }
+
+        .terminal-result-list li::before {
+            content: "> ";
+            color: var(--green);
+        }
+
+        .terminal-result-label {
+            color: var(--green-soft);
+        }
+
+        .terminal-result-note {
+            color: var(--muted);
         }
 
         .help-item code,
@@ -342,9 +403,9 @@
 
         .skills-group {
             padding: 0.85rem 0.9rem;
-            border: 1px solid rgba(51, 255, 94, 0.16);
+            border: 1px solid rgba(255, 255, 255, 0.12);
             border-radius: 12px;
-            background: rgba(3, 14, 7, 0.55);
+            background: rgba(255, 255, 255, 0.03);
         }
 
         .skills-label {
@@ -396,13 +457,13 @@
             gap: 0.65rem;
             padding: 0.92rem 1rem;
             border-top: 1px solid var(--line);
-            background: rgba(1, 7, 3, 0.94);
+            background: rgba(16, 17, 19, 0.96);
         }
 
         .prompt {
             color: var(--green);
             white-space: nowrap;
-            text-shadow: 0 0 8px rgba(51, 255, 94, 0.35);
+            text-shadow: none;
         }
 
         .command-input {
@@ -430,7 +491,7 @@
         }
 
         .command-input::placeholder {
-            color: rgba(182, 255, 202, 0.35);
+            color: rgba(255, 255, 255, 0.32);
         }
 
         .input-hint {
@@ -518,7 +579,6 @@
     </style>
 </head>
 <body>
-    <canvas id="matrix" aria-hidden="true"></canvas>
     <main class="shell">
         <section class="terminal" id="terminal">
             <header class="chrome">
@@ -715,8 +775,6 @@ asciiBanner: [
         const promptText = document.getElementById("promptText");
         const terminal = document.getElementById("terminal");
         const statusChip = document.getElementById("statusChip");
-        const matrixCanvas = document.getElementById("matrix");
-        const matrixContext = matrixCanvas.getContext("2d");
 
         const history = [];
         let historyIndex = -1;
@@ -735,14 +793,6 @@ asciiBanner: [
             ["hackermode", "hackermode"],
             ["sudo", "sudo"]
         ]);
-
-        const katakana = [
-            "ア","イ","ウ","エ","オ","カ","キ","ク","ケ","コ",
-            "サ","シ","ス","セ","ソ","タ","チ","ツ","テ","ト",
-            "ナ","ニ","ヌ","ネ","ノ","ハ","ヒ","フ","ヘ","ホ",
-            "マ","ミ","ム","メ","モ","ヤ","ユ","ヨ","ラ","リ",
-            "ル","レ","ロ","ワ","ヲ","ン","0","1","2","3","4","5","6","7","8","9","#","@","%","&","*","+","-","=","/","\\"
-        ];
 
         function escapeHtml(value) {
             return String(value)
@@ -783,34 +833,26 @@ asciiBanner: [
         }
 
         function renderHelp() {
-            const commands = profile.commands.map((command) => {
-                const alias = command.alias ? ` <span class="muted">[alias: ${escapeHtml(command.alias)}]</span>` : "";
-                const note = command.note ? `<div class="muted">${escapeHtml(command.note)}</div>` : "";
-                return `<button type="button" class="help-item" data-command="${escapeHtml(command.label)}"><code>${escapeHtml(command.label)}</code>${alias}${note}</button>`;
-            }).join("");
-
             appendBlock("line", `
-                <div class="section-title">available commands</div>
-                <div class="help-grid">${commands}</div>
-                <div class="line muted" style="margin-top:0.85rem;">Tip: use <span class="command-chip">projects &lt;number&gt;</span> for full project details.</div>
+                <div class="terminal-result">
+                    <div class="terminal-result-title">help</div>
+                    <div class="terminal-result-body">
+                        <div class="terminal-result-line">Type <span class="command-chip">about</span>, <span class="command-chip">skills</span>, <span class="command-chip">experience</span>, <span class="command-chip">projects</span>, <span class="command-chip">education</span>, <span class="command-chip">resume</span>, <span class="command-chip">contact</span>, or <span class="command-chip">clear</span>.</div>
+                        <div class="terminal-result-note">Tip: use <span class="command-chip">projects &lt;number&gt;</span> for full project details.</div>
+                    </div>
+                </div>
             `);
         }
 
         function renderAbout() {
             appendBlock("line", `
-                <div class="section-title">about</div>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-title">identity</div>
-                        <div class="details-list">
-                            <li>${escapeHtml(profile.person.name)}</li>
-                            <li>${escapeHtml(profile.person.title)}</li>
-                            <li>${escapeHtml(profile.person.location)}</li>
-                        </div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">summary</div>
-                        <div>${escapeHtml(profile.person.summary)}</div>
+                <div class="terminal-result">
+                    <div class="terminal-result-title">about</div>
+                    <div class="terminal-result-body">
+                        <div class="terminal-result-line"><span class="terminal-result-label">name:</span> ${escapeHtml(profile.person.name)}</div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">title:</span> ${escapeHtml(profile.person.title)}</div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">location:</span> ${escapeHtml(profile.person.location)}</div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">summary:</span> ${escapeHtml(profile.person.summary)}</div>
                     </div>
                 </div>
             `);
@@ -818,36 +860,30 @@ asciiBanner: [
 
         function renderSkills() {
             const groups = Object.entries(profile.skills).map(([label, items]) => `
-                <div class="skills-group">
-                    <div class="skills-label">${escapeHtml(label)}</div>
-                    <ul class="skills-list">
-                        ${items.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-                    </ul>
-                </div>
+                <div class="terminal-result-line"><span class="terminal-result-label">${escapeHtml(label.toLowerCase())}:</span> ${items.map((item) => escapeHtml(item)).join(", ")}</div>
             `).join("");
 
             appendBlock("line", `
-                <div class="section-title">skills</div>
-                <div class="skills-grid">${groups}</div>
-            `);
+                <div class="terminal-result">
+                    <div class="terminal-result-title">skills</div>
+                    <div class="terminal-result-body">${groups}</div>
+                </div>
+            `).join("");
         }
 
         function renderExperience() {
-            const items = profile.experience.map((entry) => `
-                <div class="project">
-                    <div class="project-head">
-                        <div class="project-name">${escapeHtml(entry.title)}</div>
-                        <div class="project-meta">${escapeHtml(entry.company)} · ${escapeHtml(entry.period)}</div>
-                    </div>
-                    <ul class="history-list">
-                        ${entry.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}
-                    </ul>
-                </div>
-            `).join("");
-
             appendBlock("line", `
-                <div class="section-title">experience</div>
-                <div class="history-list">${items}</div>
+                <div class="terminal-result">
+                    <div class="terminal-result-title">experience</div>
+                    <div class="terminal-result-body">
+                        ${profile.experience.map((entry) => `
+                            <div class="terminal-result-line"><span class="terminal-result-label">${escapeHtml(entry.title)}</span> · ${escapeHtml(entry.company)} · ${escapeHtml(entry.period)}</div>
+                            <ul class="terminal-result-list">
+                                ${entry.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}
+                            </ul>
+                        `).join("")}
+                    </div>
+                </div>
             `);
         }
 
@@ -860,51 +896,46 @@ asciiBanner: [
                 }
 
                 appendBlock("line", `
-                    <div class="section-title">project ${detailIndex + 1}</div>
-                    <div class="project">
-                        <div class="project-head">
-                            <div class="project-name">${escapeHtml(project.name)}</div>
-                            <div class="tag">${escapeHtml(project.tag)}</div>
+                    <div class="terminal-result">
+                        <div class="terminal-result-title">project ${detailIndex + 1}</div>
+                        <div class="terminal-result-body">
+                            <div class="terminal-result-line"><span class="terminal-result-label">name:</span> ${escapeHtml(project.name)}</div>
+                            <div class="terminal-result-line"><span class="terminal-result-label">tag:</span> ${escapeHtml(project.tag)}</div>
+                            <div class="terminal-result-line"><span class="terminal-result-label">period:</span> ${escapeHtml(project.period)}</div>
+                            <div class="terminal-result-line"><span class="terminal-result-label">employer:</span> ${escapeHtml(project.employer)}</div>
+                            <div class="terminal-result-line"><span class="terminal-result-label">description:</span> ${escapeHtml(project.description)}</div>
+                            <div class="terminal-result-line"><span class="terminal-result-label">stack:</span> ${project.stack.map((item) => escapeHtml(item)).join(", ")}</div>
+                            ${project.link ? `<div class="terminal-result-line"><span class="terminal-result-label">link:</span> <a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.link)}</a></div>` : ""}
                         </div>
-                        <div class="project-meta">${escapeHtml(project.period)} · ${escapeHtml(project.employer)}</div>
-                        <div class="project-desc" style="margin-top:0.5rem;">${escapeHtml(project.description)}</div>
-                        <div class="tags">${project.stack.map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
-                        ${project.link ? `<div style="margin-top:0.7rem;"><a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.link)}</a></div>` : ""}
                     </div>
                 `);
                 return;
             }
 
-            const list = profile.projects.map((project, index) => `
-                <div class="project">
-                    <div class="project-head">
-                        <div class="project-name">${index + 1}. ${escapeHtml(project.name)}</div>
-                        <div class="tag">${escapeHtml(project.tag)}</div>
-                    </div>
-                    <div class="project-meta">${escapeHtml(project.period)} · ${escapeHtml(project.employer)}</div>
-                    <div class="project-desc" style="margin-top:0.5rem;">${escapeHtml(project.description)}</div>
-                    <div class="tags">${project.stack.map((item) => `<span class="tag">${escapeHtml(item)}</span>`).join("")}</div>
-                    ${project.link ? `<div style="margin-top:0.7rem;"><a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.link)}</a></div>` : ""}
-                </div>
-            `).join("");
-
             appendBlock("line", `
-                <div class="section-title">projects</div>
-                <div class="project-list">${list}</div>
+                <div class="terminal-result">
+                    <div class="terminal-result-title">projects</div>
+                    <div class="terminal-result-body">
+                        ${profile.projects.map((project, index) => `
+                            <div class="terminal-result-line"><span class="terminal-result-label">${index + 1}. ${escapeHtml(project.name)}</span> · ${escapeHtml(project.tag)}</div>
+                            <div class="terminal-result-line terminal-result-note">${escapeHtml(project.period)} · ${escapeHtml(project.employer)}</div>
+                            <div class="terminal-result-line terminal-result-note">${escapeHtml(project.description)}</div>
+                            <div class="terminal-result-line terminal-result-note">stack: ${project.stack.map((item) => escapeHtml(item)).join(", ")}</div>
+                            ${project.link ? `<div class="terminal-result-line terminal-result-note">link: <a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.link)}</a></div>` : ""}
+                        `).join("")}
+                    </div>
+                </div>
             `);
         }
 
         function renderEducation() {
             appendBlock("line", `
-                <div class="section-title">education</div>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-title">degree</div>
-                        <div>${escapeHtml(profile.person.education)}</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">certifications</div>
-                        <ul class="details-list">
+                <div class="terminal-result">
+                    <div class="terminal-result-title">education</div>
+                    <div class="terminal-result-body">
+                        <div class="terminal-result-line"><span class="terminal-result-label">degree:</span> ${escapeHtml(profile.person.education)}</div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">certifications:</span></div>
+                        <ul class="terminal-result-list">
                             ${profile.certifications.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
                         </ul>
                     </div>
@@ -914,41 +945,28 @@ asciiBanner: [
 
         function renderResume() {
             appendBlock("line", `
-                <div class="section-title">resume</div>
-                <div class="split">
-                    <div class="card">
-                        <div class="card-title">contact</div>
-                        <ul class="contact-list">
-                            <li><span class="muted">phone:</span> ${escapeHtml(profile.person.phone)}</li>
-                            <li><span class="muted">email:</span> <a class="contact-link" href="mailto:${escapeHtml(profile.person.email)}">${escapeHtml(profile.person.email)}</a></li>
-                            <li><span class="muted">github:</span> <a class="contact-link" href="https://${escapeHtml(profile.person.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(profile.person.github)}</a></li>
-                            <li><span class="muted">location:</span> ${escapeHtml(profile.person.location)}</li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">summary</div>
-                        <div>${escapeHtml(profile.person.summary)}</div>
+                <div class="terminal-result">
+                    <div class="terminal-result-title">resume</div>
+                    <div class="terminal-result-body">
+                        <div class="terminal-result-line"><span class="terminal-result-label">phone:</span> ${escapeHtml(profile.person.phone)}</div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">email:</span> <a class="contact-link" href="mailto:${escapeHtml(profile.person.email)}">${escapeHtml(profile.person.email)}</a></div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">github:</span> <a class="contact-link" href="https://${escapeHtml(profile.person.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(profile.person.github)}</a></div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">location:</span> ${escapeHtml(profile.person.location)}</div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">summary:</span> ${escapeHtml(profile.person.summary)}</div>
                     </div>
                 </div>
-                <div class="line muted" style="margin-top:0.8rem;">Resume details are presented inline; use <span class="command-chip">about</span>, <span class="command-chip">skills</span>, <span class="command-chip">experience</span>, and <span class="command-chip">projects</span> for sections.</div>
             `);
         }
 
         function renderContact() {
             appendBlock("line", `
-                <div class="section-title">contact</div>
-                <div class="cards">
-                    <div class="card">
-                        <div class="card-title">direct</div>
-                        <ul class="contact-list">
-                            <li><span class="muted">email:</span> <a class="contact-link" href="mailto:${escapeHtml(profile.person.email)}">${escapeHtml(profile.person.email)}</a></li>
-                            <li><span class="muted">phone:</span> ${escapeHtml(profile.person.phone)}</li>
-                            <li><span class="muted">github:</span> <a class="contact-link" href="https://${escapeHtml(profile.person.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(profile.person.github)}</a></li>
-                        </ul>
-                    </div>
-                    <div class="card">
-                        <div class="card-title">status</div>
-                        <div>Open for software development opportunities, collaboration, and project work.</div>
+                <div class="terminal-result">
+                    <div class="terminal-result-title">contact</div>
+                    <div class="terminal-result-body">
+                        <div class="terminal-result-line"><span class="terminal-result-label">email:</span> <a class="contact-link" href="mailto:${escapeHtml(profile.person.email)}">${escapeHtml(profile.person.email)}</a></div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">phone:</span> ${escapeHtml(profile.person.phone)}</div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">github:</span> <a class="contact-link" href="https://${escapeHtml(profile.person.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(profile.person.github)}</a></div>
+                        <div class="terminal-result-line"><span class="terminal-result-label">status:</span> Open for software development opportunities, collaboration, and project work.</div>
                     </div>
                 </div>
             `);
@@ -1047,10 +1065,10 @@ asciiBanner: [
             if (!value.trim()) {
                 return;
             }
+            input.value = "";
             history.push(value);
             historyIndex = history.length;
             executeCommand(value);
-            input.value = "";
             input.focus();
         });
 
@@ -1094,82 +1112,11 @@ asciiBanner: [
 
         function boot() {
             renderIntro();
-            renderHelp();
             input.focus();
         }
 
-        function resizeMatrix() {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-            const dpr = Math.min(window.devicePixelRatio || 1, 2);
-
-            matrixCanvas.width = Math.floor(width * dpr);
-            matrixCanvas.height = Math.floor(height * dpr);
-            matrixCanvas.style.width = `${width}px`;
-            matrixCanvas.style.height = `${height}px`;
-            matrixContext.setTransform(dpr, 0, 0, dpr, 0, 0);
-        }
-
-        const matrixState = {
-            columns: [],
-            fontSize: 18,
-            chars: katakana
-        };
-
-        function initMatrix() {
-            resizeMatrix();
-            const columns = Math.ceil(window.innerWidth / matrixState.fontSize);
-            matrixState.columns = Array.from({ length: columns }, () => ({
-                y: Math.random() * window.innerHeight,
-                speed: 0.7 + Math.random() * 1.9,
-                length: 8 + Math.floor(Math.random() * 28),
-                bright: Math.random() > 0.6
-            }));
-        }
-
-        function drawMatrix() {
-            const width = window.innerWidth;
-            const height = window.innerHeight;
-
-            matrixContext.fillStyle = "rgba(0, 0, 0, 0.08)";
-            matrixContext.fillRect(0, 0, width, height);
-
-            matrixContext.font = `${matrixState.fontSize}px "JetBrains Mono", monospace`;
-            matrixContext.textBaseline = "top";
-
-            matrixState.columns.forEach((column, index) => {
-                const x = index * matrixState.fontSize;
-                column.y += column.speed;
-
-                if (column.y > height + column.length * matrixState.fontSize) {
-                    column.y = -Math.random() * height * 0.5;
-                    column.speed = 0.7 + Math.random() * 1.9;
-                    column.length = 8 + Math.floor(Math.random() * 28);
-                    column.bright = Math.random() > 0.6;
-                }
-
-                for (let i = 0; i < column.length; i += 1) {
-                    const y = column.y - i * matrixState.fontSize;
-                    if (y < -matrixState.fontSize || y > height) {
-                        continue;
-                    }
-
-                    const isHead = i === 0;
-                    const alpha = Math.max(0.05, 1 - i / column.length);
-                    matrixContext.fillStyle = isHead
-                        ? `rgba(214, 255, 225, ${column.bright ? 1 : 0.8})`
-                        : `rgba(51, 255, 94, ${alpha * 0.7})`;
-
-                    const char = matrixState.chars[Math.floor(Math.random() * matrixState.chars.length)];
-                    matrixContext.fillText(char, x, y);
-                }
-            });
-
-            requestAnimationFrame(drawMatrix);
-        }
-
         window.addEventListener("resize", () => {
-            initMatrix();
+            input.focus();
         });
 
         document.addEventListener("keydown", () => {
@@ -1177,8 +1124,6 @@ asciiBanner: [
         });
 
         boot();
-        initMatrix();
-        drawMatrix();
     </script>
 </body>
 </html>
