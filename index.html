@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="color-scheme" content="dark">
+    <meta name="description" content="Josh Neiel C. Manalo — Software Developer & Full-Stack Web Developer portfolio, presented as an interactive terminal.">
     <title>Josh Neiel C. Manalo |  Portfolio</title>
     <style>
         :root {
@@ -60,10 +61,6 @@
             background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.72) 100%);
         }
 
-        #matrix {
-            display: none;
-        }
-
         .shell {
             position: relative;
             z-index: 2;
@@ -87,11 +84,16 @@
         }
 
         .terminal.hackermode {
-            --green: #f9fafb;
-            --green-deep: #ffffff;
-            --green-soft: #ffffff;
-            --accent: #f3f4f6;
-            --shadow: 0 0 18px rgba(255, 255, 255, 0.1);
+            --green: #34d399;
+            --green-deep: #059669;
+            --green-soft: #6ee7b7;
+            --accent: #10b981;
+            --text: #d1fae5;
+            --shadow: 0 0 24px rgba(16, 185, 129, 0.25);
+        }
+
+        .terminal.hackermode .chrome {
+            background: rgba(2, 12, 8, 0.92);
         }
 
         .chrome {
@@ -198,148 +200,55 @@
             margin-bottom: 1rem;
         }
 
-        .welcome strong {
-            color: var(--green-soft);
-        }
-
-        .cards {
-            display: grid;
-            gap: 0.9rem;
-            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-            margin: 0.85rem 0 0.3rem;
-        }
-
-        .card {
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 12px;
-            padding: 0.9rem 1rem;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.02);
-        }
-
-        .card-title {
-            margin-bottom: 0.5rem;
-            color: var(--accent);
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            font-size: 0.78rem;
-        }
-
-        .tags {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.45rem;
-            margin-top: 0.5rem;
-        }
-
-        .tag {
-            display: inline-flex;
-            align-items: center;
-            padding: 0.22rem 0.55rem;
-            border-radius: 999px;
-            border: 1px solid rgba(255, 207, 107, 0.35);
-            background: rgba(255, 207, 107, 0.08);
-            color: var(--accent);
-            font-size: 0.72rem;
-        }
-
-        .project-list,
-        .history-list {
-            display: grid;
-            gap: 0.75rem;
-        }
-
-        .project {
-            border-left: 2px solid rgba(255, 255, 255, 0.24);
-            padding: 0.7rem 0.9rem 0.7rem 1rem;
-            background: rgba(255, 255, 255, 0.02);
-            border-radius: 0 10px 10px 0;
-        }
-
-        .project-head {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem 0.7rem;
-            align-items: baseline;
-            margin-bottom: 0.35rem;
-        }
-
-        .project-name {
-            color: var(--green-soft);
-            font-weight: 700;
-        }
-
-        .project-meta {
-            color: var(--muted);
-            font-size: 0.88rem;
-        }
-
-        .project-desc,
-        .history-item,
-        .contact-row,
-        .help-list,
-        .details-list,
-        .skills-grid {
-            color: #cae9d0;
-        }
-
         .project-link,
-        .contact-link,
-        .help-link {
+        .contact-link {
             color: var(--green);
             text-decoration: none;
             border-bottom: 1px dotted rgba(255, 255, 255, 0.35);
         }
 
         .project-link:hover,
-        .contact-link:hover,
-        .help-link:hover {
+        .contact-link:hover {
             color: #ffffff;
             border-bottom-color: rgba(255, 255, 255, 0.7);
         }
 
-        .help-list {
-            list-style: none;
-            display: grid;
-            gap: 0.7rem;
-            margin-top: 0.55rem;
-        }
-
-        .help-item {
-            appearance: none;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03);
-            color: inherit;
-            text-align: left;
-            font: inherit;
-            cursor: pointer;
-            padding: 0.7rem 0.85rem;
-            display: grid;
-            gap: 0.35rem;
-        }
-
-        .help-item:hover {
-            border-color: rgba(255, 255, 255, 0.28);
-            background: rgba(255, 255, 255, 0.06);
-        }
-
-        .help-item-header {
+        .project-buttons {
             display: flex;
+            flex-wrap: wrap;
+            gap: 0.55rem;
+            margin-top: 0.35rem;
+        }
+
+        .project-btn {
+            display: inline-flex;
             align-items: center;
-            justify-content: space-between;
-            gap: 0.75rem;
-        }
-
-        .help-item-name {
+            gap: 0.4rem;
+            padding: 0.4rem 0.75rem;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            background: rgba(255, 255, 255, 0.06);
             color: var(--green-soft);
-            font-weight: 700;
+            text-decoration: none;
+            font-size: 0.82rem;
+            letter-spacing: 0.02em;
+            transition: background 0.15s ease, border-color 0.15s ease;
         }
 
-        .help-item-note {
-            color: var(--muted);
-            font-size: 0.88rem;
-            line-height: 1.5;
+        .project-btn:hover {
+            background: rgba(255, 255, 255, 0.14);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        .project-btn::before {
+            content: "↗";
+        }
+
+        .project-btn.disabled {
+            opacity: 0.4;
+            border-style: dashed;
+            cursor: default;
+            pointer-events: none;
         }
 
         .terminal-result {
@@ -389,66 +298,18 @@
             color: var(--muted);
         }
 
-        .help-item code,
+        .project-entry {
+            padding: 0.6rem 0;
+            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
+        }
+
+        .project-entry:last-child {
+            border-bottom: none;
+        }
+
         .command-chip {
             color: var(--accent);
             font-size: 0.92em;
-        }
-
-        .skills-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 0.8rem;
-        }
-
-        .skills-group {
-            padding: 0.85rem 0.9rem;
-            border: 1px solid rgba(255, 255, 255, 0.12);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.03);
-        }
-
-        .skills-label {
-            color: var(--green-soft);
-            margin-bottom: 0.45rem;
-            text-transform: uppercase;
-            letter-spacing: 0.12em;
-            font-size: 0.74rem;
-        }
-
-        .skills-list,
-        .details-list,
-        .history-list,
-        .contact-list {
-            list-style: none;
-            display: grid;
-            gap: 0.45rem;
-        }
-
-        .details-list li::before,
-        .skills-list li::before,
-        .history-list li::before,
-        .contact-list li::before {
-            content: "> ";
-            color: var(--green);
-        }
-
-        .split {
-            display: grid;
-            gap: 0.9rem;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-        }
-
-        .section {
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            color: var(--green-soft);
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            margin-bottom: 0.7rem;
-            font-size: 0.82rem;
         }
 
         .command-line {
@@ -485,11 +346,6 @@
             min-width: 0;
         }
 
-        .caret {
-            pointer-events: none;
-            display: none;
-        }
-
         .command-input::placeholder {
             color: rgba(255, 255, 255, 0.32);
         }
@@ -508,11 +364,6 @@
             color: inherit;
         }
 
-        @keyframes blink {
-            0%, 49% { opacity: 1; }
-            50%, 100% { opacity: 0; }
-        }
-
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -524,12 +375,14 @@
             }
         }
 
-        .line,
-        .project,
-        .card,
-        .help-item,
-        .skills-group {
+        .line {
             animation: fadeInUp 0.35s ease both;
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .line {
+                animation: none;
+            }
         }
 
         @media (max-width: 780px) {
@@ -579,6 +432,15 @@
     </style>
 </head>
 <body>
+    <noscript>
+        <div style="max-width:720px;margin:2rem auto;padding:1.5rem;font-family:monospace;color:#e5e7eb;background:#0b0c0d;">
+            <h1>Josh Neiel C. Manalo</h1>
+            <p>Software Developer | Full-Stack Web Developer — Philippines</p>
+            <p>Software Developer with hands-on experience designing, developing, testing, and deploying scalable web applications using React, Laravel, MySQL, PHP, and C#.</p>
+            <p>Email: joshneiel.manalo102403@gmail.com · GitHub: github.com/whiplashx</p>
+            <p>Enable JavaScript to use the interactive terminal version of this portfolio.</p>
+        </div>
+    </noscript>
     <main class="shell">
         <section class="terminal" id="terminal">
             <header class="chrome">
@@ -598,7 +460,6 @@
                     <span class="prompt" id="promptText">joshneiel@portfolio:~$</span>
                     <span class="caret-wrap">
                         <input id="commandInput" class="command-input" type="text" inputmode="text" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Terminal command input" placeholder="type a command...">
-                        <span class="caret" aria-hidden="true"></span>
                     </span>
                     <span class="input-hint">enter to run, ↑↓ for history</span>
                 </form>
@@ -608,15 +469,15 @@
 
     <script>
         const profile = {
-asciiBanner: [
-    "     ██╗███╗   ██╗ ██████╗███╗   ███╗",
-    "     ██║████╗  ██║██╔════╝████╗ ████║",
-    "     ██║██╔██╗ ██║██║     ██╔████╔██║",
-    "██   ██║██║╚██╗██║██║     ██║╚██╔╝██║",
-    "╚█████╔╝██║ ╚████║╚██████╗██║ ╚═╝ ██║",
-    " ╚════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝     ╚═╝"
-].join("\n"),
-            welcomeMessage: "Welcome to the personal portfolio of Josh Neiel C. Manalo. (Version 2.0.0)",
+            asciiBanner: [
+                "     ██╗███╗   ██╗ ██████╗███╗   ███╗",
+                "     ██║████╗  ██║██╔════╝████╗ ████║",
+                "     ██║██╔██╗ ██║██║     ██╔████╔██║",
+                "██   ██║██║╚██╗██║██║     ██║╚██╔╝██║",
+                "╚█████╔╝██║ ╚████║╚██████╗██║ ╚═╝ ██║",
+                " ╚════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝     ╚═╝"
+            ].join("\n"),
+            welcomeMessage: "Welcome to the personal portfolio of Josh Neiel C. Manalo. (Version 2.1.0)",
             subtitle: "Software Developer · Full-Stack Web Developer · Philippines",
             helpHint: "Type 'help' to see the list of available commands.",
             person: {
@@ -667,85 +528,74 @@ asciiBanner: [
             ],
             projects: [
                 {
-                    name: "iMap – Web-Based Mapping System",
-                    tag: "Best Capstone",
-                    stack: ["React", "Laravel", "MySQL", "ArcGIS ESRI JS API", "Vite"],
-                    period: "Jan 2025 – May 2026",
-                    employer: "Mindoro State University – Bongabong Campus (Capstone Project)",
+                    name: "GIS Parcel Management System",
+                    stack: ["Laravel", "React", "MySQL", "ArcGIS", "React Leaflet", "REST API", "JavaScript", "HTML5", "CSS3", "Git"],
+                    description: "Developed a full-stack Geographic Information System (GIS) for managing parcel subdivisions and land records. Implemented interactive map visualization, spatial data management, authentication, and RESTful APIs to streamline land administration workflows.",
                     link: "https://imap-plotter.com",
-                    description: "GIS web app for visualizing and managing lot subdivisions; interactive parcel search/analysis, real-time visualization, dynamic layer controls, concurrent multi-user access."
+                    github: null
                 },
                 {
-                    name: "Cabinetuan Information System",
-                    tag: "CRM + Quotation & Billing",
-                    stack: ["PHP", "MySQL", "HTML", "CSS", "JavaScript", "Bootstrap"],
-                    period: "Jul 2025 – Feb 2026",
-                    employer: "Cabinetuan Modular Cabinet",
-                    link: "https://cabinetuan.com",
-                    description: "Digitized records/retrieval; mailed customer inquiries; customizable quotation & invoice generation with modular cabinet components priced from bill of materials."
-                },
-                {
-                    name: "AccSys – Accreditation Compliance System",
-                    tag: "University Accreditation",
-                    stack: ["Laravel", "PHP", "MySQL", "React", "LLM API (FastAPI + Ollama)"],
-                    period: "Nov 2024 – Nov 2025",
-                    employer: "Mindoro State University – Bongabong Campus",
+                    name: "Accreditation Document Management System",
+                    stack: ["Laravel", "React", "MySQL", "JavaScript", "HTML5", "CSS3", "REST API", "Git"],
+                    description: "Built a document management platform for organizing accreditation records with role-based authentication, secure file uploads, document management, and report generation.",
                     link: null,
-                    description: "AACCUP accreditation management: document management, scheduling, evaluation, report generation, role-based workflows, plus a local document-analysis chatbot."
+                    github: null
                 },
                 {
-                    name: "Roomify",
-                    tag: "IoT Room Monitoring",
-                    stack: ["PHP", "MySQL", "JavaScript", "Tailwind", "FastAPI", "WebSockets", "Debian on-prem server"],
-                    period: "Oct 2025 – Dec 2025",
-                    employer: "Academic Project (Senior Year)",
-                    link: null,
-                    description: "Room rental/monitoring platform with booking management and an IoT-camera-based image processing API for student counting."
+                    name: "E-Commerce Content Management System",
+                    stack: ["Laravel", "MySQL", "JavaScript", "PayPal API", "HTML5", "CSS3", "Bootstrap", "REST API", "Git"],
+                    description: "Developed a full-featured e-commerce platform with inventory management, product catalog, content management, shopping cart, secure checkout, and PayPal payment integration.",
+                    link: "https://arbitrage.com.ph",
+                    github: null
                 },
                 {
-                    name: "Arbitrage OJT Monitoring System",
-                    tag: "Trainee Monitoring",
-                    stack: ["PHP", "Laravel", "React", "MySQL"],
-                    period: "Mar 2026 – Apr 2026",
-                    employer: "Arbitrage Incorporated",
-                    link: null,
-                    description: "Monitors OJT trainees: attendance, progress reports, evaluations, supervisor feedback."
+                    name: "Internship Management System",
+                    stack: ["Laravel", "React", "MySQL", "JavaScript", "HTML5", "CSS3", "REST API", "Git"],
+                    description: "Designed and developed a web application for managing internship programs, including student tracking, company assignments, evaluations, progress monitoring, and document management.",
+                    link: "https://avc-sol.com",
+                    github: null
                 },
                 {
-                    name: "Arbitrage CMS & E-Commerce Platform",
-                    tag: "CMS + E-Commerce",
-                    stack: ["PHP", "Laravel", "MySQL", "React", "PayPal API", "Cloudflare Tunnel", "Hostinger"],
-                    period: "Aug 2024 – Oct 2024",
-                    employer: "Arbitrage Incorporated",
+                    name: "Business Management Web Application",
+                    stack: ["Laravel", "React", "MySQL", "JavaScript", "HTML5", "CSS3", "REST API", "Git"],
+                    description: "Developed a responsive full-stack business management application featuring user authentication, CRUD operations, dashboard analytics, and database-driven workflows.",
                     link: null,
-                    description: "CMS + e-commerce for computer products: product catalog, order processing, user management, PayPal payment integration."
+                    github: null
                 },
                 {
-                    name: "Jopats Resort Reservation System",
-                    tag: "Online Reservations",
-                    stack: ["Next.js", "Firebase", "TypeScript"],
-                    period: "Jan 2024 – Apr 2024",
-                    employer: "Academic Project",
+                    name: "Enterprise Management Platform",
+                    stack: ["Laravel", "React", "MySQL", "JavaScript", "HTML5", "CSS3", "REST API", "Git"],
+                    description: "Created a scalable enterprise web application with role-based access control, workflow automation, user management, and RESTful API architecture.",
                     link: null,
-                    description: "Resort booking system with admin reservation management and a points-based rewards/voucher system."
+                    github: null
                 },
                 {
-                    name: "Tamaride",
-                    tag: "Mobile Transportation App",
-                    stack: ["Flutter", "Dart", "Firebase"],
-                    period: "May 2025",
-                    employer: "Academic Project",
+                    name: "Resort Reservation & Management System",
+                    stack: ["Laravel", "MySQL", "JavaScript", "HTML5", "CSS3", "Bootstrap", "REST API", "Git"],
+                    description: "Built a web-based reservation and management platform for hospitality businesses with online booking, customer management, room management, and an administrative dashboard.",
                     link: null,
-                    description: "Flutter mobile app for booking rides with an intuitive passenger UX."
+                    github: null
                 },
                 {
-                    name: "Java POS System",
-                    tag: "In Progress",
-                    stack: ["Java", "Spring Boot", "Spring Security", "JWT", "React", "TypeScript", "MySQL"],
-                    period: "Jun 2026 – Present",
-                    employer: "Personal Learning Project",
+                    name: "Ride Booking Mobile Application",
+                    stack: ["Flutter", "Dart", "Firebase", "Google Maps API", "REST API", "Git"],
+                    description: "Developed a cross-platform ride-booking mobile application featuring user authentication, trip management, location services, and a responsive mobile interface.",
                     link: null,
-                    description: "Modern POS with JWT auth, inventory/product/user management, RESTful APIs."
+                    github: null
+                },
+                {
+                    name: "Property Rental Mobile Application",
+                    stack: ["Flutter", "Dart", "Firebase", "REST API", "Git"],
+                    description: "Built a cross-platform property rental application that enables users to browse, search, and book rental properties with real-time data synchronization.",
+                    link: null,
+                    github: null
+                },
+                {
+                    name: "AI Document Question Answering System",
+                    stack: ["Python", "FastAPI", "Hugging Face", "PyTorch", "spaCy", "pdfplumber", "REST API", "Git"],
+                    description: "Developed an AI-powered document analysis platform capable of extracting information from PDF files and generating context-aware answers using transformer-based natural language processing models.",
+                    link: null,
+                    github: null
                 }
             ],
             certifications: [
@@ -754,17 +604,17 @@ asciiBanner: [
             ],
             terminalPrompt: "joshneiel@portfolio:~$",
             commands: [
-                { label: "about", alias: "a" },
-                { label: "skills", alias: "s" },
-                { label: "experience", alias: "exp" },
+                { label: "about", alias: "a", note: "summary and role" },
+                { label: "skills", alias: "s", note: "technical stack by category" },
+                { label: "experience", alias: "exp", note: "work history" },
                 { label: "projects", alias: "pj", note: "supports 'projects <number>' for full detail" },
-                { label: "education", alias: "edu" },
-                { label: "resume", alias: "cv" },
-                { label: "contact", alias: "c" },
-                { label: "clear", alias: null }
+                { label: "education", alias: "edu", note: "degree and certifications" },
+                { label: "resume", alias: "cv", note: "contact + summary" },
+                { label: "contact", alias: "c", note: "how to reach me" },
+                { label: "clear", alias: null, note: "clear the screen" }
             ],
             easterEggs: {
-                hackermode: "Toggles theme to red, 'Hackermode activated.'",
+                hackermode: "Toggles a green hacker-styled theme.",
                 sudo: "Nice try. This incident will be reported."
             }
         };
@@ -772,7 +622,6 @@ asciiBanner: [
         const output = document.getElementById("output");
         const form = document.getElementById("commandForm");
         const input = document.getElementById("commandInput");
-        const promptText = document.getElementById("promptText");
         const terminal = document.getElementById("terminal");
         const statusChip = document.getElementById("statusChip");
 
@@ -837,8 +686,10 @@ asciiBanner: [
                 <div class="terminal-result">
                     <div class="terminal-result-title">help</div>
                     <div class="terminal-result-body">
-                        <div class="terminal-result-line">Type <span class="command-chip">about</span>, <span class="command-chip">skills</span>, <span class="command-chip">experience</span>, <span class="command-chip">projects</span>, <span class="command-chip">education</span>, <span class="command-chip">resume</span>, <span class="command-chip">contact</span>, or <span class="command-chip">clear</span>.</div>
-                        <div class="terminal-result-note">Tip: use <span class="command-chip">projects &lt;number&gt;</span> for full project details.</div>
+                        <ul class="terminal-result-list">
+                            ${profile.commands.map((cmd) => `<li><span class="command-chip">${escapeHtml(cmd.label)}</span>${cmd.alias ? ` (alias: <span class="command-chip">${escapeHtml(cmd.alias)}</span>)` : ""} — ${escapeHtml(cmd.note)}</li>`).join("")}
+                        </ul>
+                        <div class="terminal-result-note">Tip: use <span class="command-chip">projects &lt;number&gt;</span>, e.g. <span class="command-chip">projects 1</span>, for full project details.</div>
                     </div>
                 </div>
             `);
@@ -868,7 +719,7 @@ asciiBanner: [
                     <div class="terminal-result-title">skills</div>
                     <div class="terminal-result-body">${groups}</div>
                 </div>
-            `).join("");
+            `);
         }
 
         function renderExperience() {
@@ -887,25 +738,32 @@ asciiBanner: [
             `);
         }
 
+        function projectButtons(project) {
+            const liveBtn = project.link
+                ? `<a class="project-btn" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">view live page</a>`
+                : `<span class="project-btn disabled">view live page</span>`;
+            const githubBtn = project.github
+                ? `<a class="project-btn" href="${escapeHtml(project.github)}" target="_blank" rel="noopener noreferrer">view source</a>`
+                : "";
+            return `<div class="project-buttons">${liveBtn}${githubBtn}</div>`;
+        }
+
         function renderProjects(detailIndex = null) {
             if (detailIndex !== null) {
                 const project = profile.projects[detailIndex];
                 if (!project) {
-                    appendLine(`Project ${detailIndex + 1} not found. Use <span class="command-chip">projects</span> to list all entries.`, "line warn");
+                    appendLine(`Project ${detailIndex + 1} not found. Use <span class="command-chip">projects</span> to list all entries (1–${profile.projects.length}).`, "line warn");
                     return;
                 }
 
                 appendBlock("line", `
                     <div class="terminal-result">
-                        <div class="terminal-result-title">project ${detailIndex + 1}</div>
+                        <div class="terminal-result-title">project ${detailIndex + 1} / ${profile.projects.length}</div>
                         <div class="terminal-result-body">
                             <div class="terminal-result-line"><span class="terminal-result-label">name:</span> ${escapeHtml(project.name)}</div>
-                            <div class="terminal-result-line"><span class="terminal-result-label">tag:</span> ${escapeHtml(project.tag)}</div>
-                            <div class="terminal-result-line"><span class="terminal-result-label">period:</span> ${escapeHtml(project.period)}</div>
-                            <div class="terminal-result-line"><span class="terminal-result-label">employer:</span> ${escapeHtml(project.employer)}</div>
                             <div class="terminal-result-line"><span class="terminal-result-label">description:</span> ${escapeHtml(project.description)}</div>
                             <div class="terminal-result-line"><span class="terminal-result-label">stack:</span> ${project.stack.map((item) => escapeHtml(item)).join(", ")}</div>
-                            ${project.link ? `<div class="terminal-result-line"><span class="terminal-result-label">link:</span> <a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.link)}</a></div>` : ""}
+                            ${projectButtons(project)}
                         </div>
                     </div>
                 `);
@@ -914,14 +772,15 @@ asciiBanner: [
 
             appendBlock("line", `
                 <div class="terminal-result">
-                    <div class="terminal-result-title">projects</div>
+                    <div class="terminal-result-title">projects (${profile.projects.length})</div>
                     <div class="terminal-result-body">
                         ${profile.projects.map((project, index) => `
-                            <div class="terminal-result-line"><span class="terminal-result-label">${index + 1}. ${escapeHtml(project.name)}</span> · ${escapeHtml(project.tag)}</div>
-                            <div class="terminal-result-line terminal-result-note">${escapeHtml(project.period)} · ${escapeHtml(project.employer)}</div>
-                            <div class="terminal-result-line terminal-result-note">${escapeHtml(project.description)}</div>
-                            <div class="terminal-result-line terminal-result-note">stack: ${project.stack.map((item) => escapeHtml(item)).join(", ")}</div>
-                            ${project.link ? `<div class="terminal-result-line terminal-result-note">link: <a class="project-link" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">${escapeHtml(project.link)}</a></div>` : ""}
+                            <div class="project-entry">
+                                <div class="terminal-result-line"><span class="terminal-result-label">${index + 1}. ${escapeHtml(project.name)}</span></div>
+                                <div class="terminal-result-line terminal-result-note">${escapeHtml(project.description)}</div>
+                                <div class="terminal-result-line terminal-result-note">stack: ${project.stack.map((item) => escapeHtml(item)).join(", ")}</div>
+                                ${projectButtons(project)}
+                            </div>
                         `).join("")}
                     </div>
                 </div>
@@ -1001,13 +860,6 @@ asciiBanner: [
             const normalized = commandMap.get(head);
 
             if (!normalized) {
-                if (head === "projects" && rest.length) {
-                    const index = Number.parseInt(rest[0], 10);
-                    if (Number.isFinite(index)) {
-                        renderProjects(index - 1);
-                        return;
-                    }
-                }
                 renderUnknown(trimmed);
                 return;
             }
@@ -1094,34 +946,35 @@ asciiBanner: [
             }
         });
 
-        output.addEventListener("click", (event) => {
-            const target = event.target instanceof Element ? event.target.closest("[data-command]") : null;
-            if (!target) {
+        // Refocus the terminal input when the user clicks anywhere in the
+        // terminal (but not on a link/button) so typing "just works".
+        terminal.addEventListener("click", (event) => {
+            const isInteractive = event.target instanceof Element && event.target.closest("a, button");
+            if (!isInteractive) {
+                input.focus();
+            }
+        });
+
+        // Refocus on printable keystrokes typed anywhere on the page, but
+        // never hijack modifier combos (Ctrl/Cmd+F, Cmd+Tab, etc.) or steal
+        // focus from another interactive element the user is deliberately using.
+        document.addEventListener("keydown", (event) => {
+            if (event.ctrlKey || event.metaKey || event.altKey) {
                 return;
             }
-
-            const command = target.getAttribute("data-command");
-            if (!command) {
+            const active = document.activeElement;
+            if (active && active !== input && active !== document.body) {
                 return;
             }
-
-            input.value = command;
-            input.focus();
-            form.requestSubmit();
+            if (event.key.length === 1 || event.key === "Backspace") {
+                input.focus();
+            }
         });
 
         function boot() {
             renderIntro();
             input.focus();
         }
-
-        window.addEventListener("resize", () => {
-            input.focus();
-        });
-
-        document.addEventListener("keydown", () => {
-            input.focus();
-        });
 
         boot();
     </script>
