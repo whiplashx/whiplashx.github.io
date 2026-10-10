@@ -1,982 +1,468 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="dark">
-    <meta name="description" content="Josh Neiel C. Manalo — Software Developer & Full-Stack Web Developer portfolio, presented as an interactive terminal.">
-    <title>Josh Neiel C. Manalo |  Portfolio</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Portfolio of Josh Neiel C. Manalo, a software developer and full-stack web developer.">
+    <meta name="theme-color" content="#ffffff">
+    <title>Josh Neiel C. Manalo — Software Developer</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #0b0c0d;
-            --panel: rgba(20, 21, 23, 0.9);
-            --panel-strong: rgba(28, 29, 31, 0.98);
-            --line: rgba(255, 255, 255, 0.12);
-            --green: #f3f4f6;
-            --green-deep: #c7c9cc;
-            --green-soft: #ffffff;
-            --accent: #d1d5db;
-            --text: #e5e7eb;
-            --muted: #9ca3af;
-            --danger: #fca5a5;
-            --warning: #f5f5f5;
-            --shadow: 0 0 18px rgba(255, 255, 255, 0.08);
+            --black: #000;
+            --ink: #111;
+            --muted: #666;
+            --line: #e5e5e5;
+            --soft: #f7f7f7;
+            --max: 1160px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-
-        html, body {
-            min-height: 100%;
-        }
-
+        * { box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            background: var(--bg);
-            color: var(--text);
-            font-family: "JetBrains Mono", "Courier New", Courier, monospace;
-            overflow: hidden;
-            text-rendering: optimizeLegibility;
+            margin: 0;
+            color: var(--ink);
+            background: #fff;
+            font-family: "Inter", Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
         }
-
-        body::before,
-        body::after {
-            content: "";
-            position: fixed;
-            inset: 0;
-            pointer-events: none;
-            z-index: 1;
+        a { color: inherit; transition: color .2s, opacity .2s, text-decoration-color .2s; }
+        :focus-visible { outline: 2px solid var(--black); outline-offset: 4px; }
+        .container { width: min(var(--max), calc(100% - 48px)); margin: 0 auto; }
+        .site-header {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: rgba(255, 255, 255, .94);
+            border-bottom: 1px solid var(--line);
+            backdrop-filter: blur(10px);
         }
-
-        body::before {
-            background: linear-gradient(rgba(255, 255, 255, 0.025) 50%, transparent 50%);
-            background-size: 100% 4px;
-            opacity: 0.09;
-            mix-blend-mode: screen;
-        }
-
-        body::after {
-            background: radial-gradient(circle at center, transparent 35%, rgba(0, 0, 0, 0.72) 100%);
-        }
-
-        .shell {
-            position: relative;
-            z-index: 2;
-            min-height: 100vh;
-            display: grid;
-            place-items: center;
-            padding: 2rem 1rem;
-        }
-
-        .terminal {
-            width: min(1100px, 100%);
-            height: min(92vh, 980px);
-            display: flex;
-            flex-direction: column;
-            border: 1px solid rgba(255, 255, 255, 0.14);
-            border-radius: 18px;
-            overflow: hidden;
-            background: linear-gradient(180deg, rgba(24, 25, 27, 0.92), rgba(14, 15, 16, 0.98));
-            box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.06), 0 25px 80px rgba(0, 0, 0, 0.68), var(--shadow);
-            backdrop-filter: blur(8px);
-        }
-
-        .terminal.hackermode {
-            --green: #34d399;
-            --green-deep: #059669;
-            --green-soft: #6ee7b7;
-            --accent: #10b981;
-            --text: #d1fae5;
-            --shadow: 0 0 24px rgba(16, 185, 129, 0.25);
-        }
-
-        .terminal.hackermode .chrome {
-            background: rgba(2, 12, 8, 0.92);
-        }
-
-        .chrome {
+        .nav {
+            min-height: 72px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            gap: 1rem;
-            padding: 0.85rem 1rem;
-            background: rgba(1, 7, 3, 0.92);
-            border-bottom: 1px solid var(--line);
+            gap: 2rem;
         }
-
-        .dots {
-            display: flex;
-            gap: 0.45rem;
-            align-items: center;
-            min-width: 74px;
-        }
-
-        .dot {
-            width: 12px;
-            height: 12px;
-            border-radius: 999px;
-            box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.15);
-        }
-
-        .dot.red { background: #8b8f97; }
-        .dot.yellow { background: #b6bac2; }
-        .dot.green { background: #e5e7eb; }
-
-        .chrome-title {
-            color: var(--green-soft);
-            font-size: 0.82rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            opacity: 0.95;
-            text-align: center;
-            flex: 1;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-        }
-
-        .chrome-status {
-            min-width: 74px;
-            text-align: right;
-            color: var(--accent);
-            font-size: 0.76rem;
-            letter-spacing: 0.08em;
-        }
-
-        .terminal-body {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            min-height: 0;
-        }
-
-        .output {
-            flex: 1;
-            overflow: auto;
-            padding: 1.3rem 1.2rem 1rem;
-            scrollbar-color: rgba(229, 231, 235, 0.45) transparent;
-            scrollbar-width: thin;
-        }
-
-        .output::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        .output::-webkit-scrollbar-thumb {
-            background: rgba(229, 231, 235, 0.3);
-            border-radius: 999px;
-        }
-
-        .line {
-            margin-bottom: 0.7rem;
-            line-height: 1.7;
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .line.muted { color: var(--muted); }
-        .line.green { color: var(--green); text-shadow: none; }
-        .line.soft { color: var(--green-soft); }
-        .line.accent { color: var(--accent); }
-        .line.warn { color: var(--warning); }
-        .line.danger { color: var(--danger); }
-
-        .banner {
-            color: var(--green-soft);
-            text-shadow: none;
-            font-size: clamp(0.62rem, 1.3vw, 0.88rem);
-            letter-spacing: 0.05em;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-            white-space: pre;
-            overflow-x: auto;
-        }
-
-        .welcome {
-            display: grid;
-            gap: 0.35rem;
-            margin-bottom: 1rem;
-        }
-
-        .project-link,
-        .contact-link {
-            color: var(--green);
-            text-decoration: none;
-            border-bottom: 1px dotted rgba(255, 255, 255, 0.35);
-        }
-
-        .project-link:hover,
-        .contact-link:hover {
-            color: #ffffff;
-            border-bottom-color: rgba(255, 255, 255, 0.7);
-        }
-
-        .project-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.55rem;
-            margin-top: 0.35rem;
-        }
-
-        .project-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.4rem 0.75rem;
-            border-radius: 8px;
-            border: 1px solid rgba(255, 255, 255, 0.28);
-            background: rgba(255, 255, 255, 0.06);
-            color: var(--green-soft);
-            text-decoration: none;
-            font-size: 0.82rem;
-            letter-spacing: 0.02em;
-            transition: background 0.15s ease, border-color 0.15s ease;
-        }
-
-        .project-btn:hover {
-            background: rgba(255, 255, 255, 0.14);
-            border-color: rgba(255, 255, 255, 0.5);
-        }
-
-        .project-btn::before {
-            content: "↗";
-        }
-
-        .project-btn.disabled {
-            opacity: 0.4;
-            border-style: dashed;
-            cursor: default;
-            pointer-events: none;
-        }
-
-        .terminal-result {
-            display: grid;
-            gap: 0.4rem;
-            margin-bottom: 1rem;
-            padding: 0.15rem 0 0.15rem 0.9rem;
-            border-left: 1px solid rgba(255, 255, 255, 0.16);
-        }
-
-        .terminal-result-title {
-            color: var(--green-soft);
-            text-transform: uppercase;
-            letter-spacing: 0.14em;
-            font-size: 0.82rem;
-        }
-
-        .terminal-result-body {
-            display: grid;
-            gap: 0.35rem;
-            color: #d7dadf;
-            line-height: 1.7;
-        }
-
-        .terminal-result-line {
-            white-space: pre-wrap;
-            word-break: break-word;
-        }
-
-        .terminal-result-list {
-            list-style: none;
-            display: grid;
-            gap: 0.35rem;
-            margin-top: 0.15rem;
-        }
-
-        .terminal-result-list li::before {
-            content: "> ";
-            color: var(--green);
-        }
-
-        .terminal-result-label {
-            color: var(--green-soft);
-        }
-
-        .terminal-result-note {
-            color: var(--muted);
-        }
-
-        .project-entry {
-            padding: 0.6rem 0;
-            border-bottom: 1px dashed rgba(255, 255, 255, 0.08);
-        }
-
-        .project-entry:last-child {
-            border-bottom: none;
-        }
-
-        .command-chip {
-            color: var(--accent);
-            font-size: 0.92em;
-        }
-
-        .command-line {
-            display: flex;
-            align-items: center;
-            gap: 0.65rem;
-            padding: 0.92rem 1rem;
-            border-top: 1px solid var(--line);
-            background: rgba(16, 17, 19, 0.96);
-        }
-
-        .prompt {
-            color: var(--green);
-            white-space: nowrap;
-            text-shadow: none;
-        }
-
-        .command-input {
-            flex: 1;
-            min-width: 0;
-            border: 0;
-            outline: 0;
-            background: transparent;
-            color: var(--green-soft);
-            font: inherit;
-            caret-color: var(--green-soft);
-        }
-
-        .caret-wrap {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            flex: 1;
-            min-width: 0;
-        }
-
-        .command-input::placeholder {
-            color: rgba(255, 255, 255, 0.32);
-        }
-
-        .input-hint {
-            color: var(--muted);
-            font-size: 0.8rem;
-            white-space: nowrap;
-        }
-
-        .blip {
-            color: var(--accent);
-        }
-
-        .terminal a {
-            color: inherit;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(8px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .line {
-            animation: fadeInUp 0.35s ease both;
-        }
-
+        .brand { font-size: .82rem; font-weight: 800; letter-spacing: .12em; text-decoration: none; white-space: nowrap; }
+        .nav-links { display: flex; gap: 1.65rem; align-items: center; }
+        .nav-links a { position: relative; color: var(--muted); font-size: .78rem; text-decoration: none; }
+        .nav-links a::after { position: absolute; right: 0; bottom: -.55rem; left: 0; height: 1px; background: var(--black); content: ""; transform: scaleX(0); transform-origin: left; transition: transform .2s ease; }
+        .nav-links a:hover::after, .nav-links a:focus-visible::after, .nav-links a.active::after { transform: scaleX(1); }
+        .nav-links a:hover, .nav-links a:focus-visible { color: var(--black); }
+        .menu-button { display: none; border: 0; background: none; padding: .5rem; cursor: pointer; }
+        .menu-button span { display: block; width: 22px; height: 1px; margin: 5px 0; background: var(--black); }
+        .hero { padding: clamp(7rem, 15vw, 11rem) 0 8rem; border-bottom: 1px solid var(--line); }
+        .hero-layout { display: grid; grid-template-columns: 1.1fr .9fr; align-items: center; gap: clamp(3rem, 8vw, 8rem); }
+        .hero-content { max-width: 700px; }
+        .hero-visual { width: min(100%, 430px); justify-self: end; }
+        .code-window { overflow: hidden; border: 1px solid var(--line); background: var(--soft); box-shadow: 16px 16px 0 #fff, 17px 17px 0 var(--line); }
+        .code-window-header { display: flex; align-items: center; justify-content: space-between; padding: .8rem 1rem; border-bottom: 1px solid var(--line); color: var(--muted); font-family: monospace; font-size: .68rem; }
+        .code-dots { display: flex; gap: .35rem; }
+        .code-dots span { width: .42rem; height: .42rem; border: 1px solid #aaa; border-radius: 50%; }
+        .code-body { padding: 1.5rem; color: var(--muted); font-family: monospace; font-size: .78rem; line-height: 2; }
+        .code-body strong { color: var(--ink); font-weight: 500; }
+        .code-body .code-keyword { color: #444; }
+        .code-body .code-comment { color: #999; }
+        .code-status { display: flex; align-items: center; gap: .6rem; padding: 1rem 1.5rem; border-top: 1px solid var(--line); color: var(--muted); font-size: .68rem; }
+        .code-status::before { width: .45rem; height: .45rem; border-radius: 50%; background: var(--black); content: ""; }
+        section { scroll-margin-top: 72px; }
+        .eyebrow { margin: 0 0 1.5rem; color: var(--muted); font-size: .7rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+        h1, h2, h3, p { margin-top: 0; }
+        h1 { max-width: 840px; margin-bottom: 1.5rem; font-size: clamp(3.3rem, 8vw, 7.25rem); line-height: .96; letter-spacing: -.075em; }
+        .hero-title-line { display: block; opacity: 0; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+        .hero.is-visible .hero-title-line { opacity: 1; transform: translateY(0); }
+        .hero.is-visible .hero-title-line:nth-child(1) { transition-delay: .2s; }
+        .hero.is-visible .hero-title-line:nth-child(2) { transition-delay: .35s; }
+        .hero.is-visible .hero-title-line:nth-child(3) { transition-delay: .5s; }
+        .hero-copy { max-width: 650px; margin-bottom: 2.5rem; color: var(--muted); font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.75; }
+        .actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+        .button { display: inline-flex; align-items: center; justify-content: center; min-height: 46px; padding: 0 1.2rem; border: 1px solid var(--black); font-size: .8rem; font-weight: 600; text-decoration: none; transition: transform .2s ease, background .2s, color .2s; }
+        .button:hover, .button:focus-visible { transform: translateY(-3px); }
+        .button:active { transform: translateY(-1px) scale(.98); }
+        .button.primary { color: #fff; background: var(--black); }
+        .button.primary:hover, .button.primary:focus-visible { color: var(--black); background: #fff; }
+        .button.secondary:hover, .button.secondary:focus-visible { color: #fff; background: var(--black); }
+        .tech-strip { display: flex; flex-wrap: wrap; gap: .7rem 1.4rem; margin-top: 5rem; color: var(--muted); font-size: .72rem; }
+        .logo-item { display: inline-flex; align-items: center; gap: .5rem; transition: color .2s ease, transform .2s ease; }
+        .logo-item:hover { color: var(--black); transform: translateY(-2px); }
+        .brand-logo { width: 1.15rem; height: 1.15rem; object-fit: contain; opacity: .68; filter: grayscale(1) contrast(1.15); transition: opacity .2s ease, filter .2s ease; }
+        .logo-item:hover .brand-logo, .skill-item:hover .brand-logo, .tag:hover .brand-logo { opacity: 1; filter: grayscale(0) contrast(1); }
+        .skill-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--line); }
+        .skill-group { min-height: 220px; padding: 1.5rem; background: #fff; transition: background .25s ease, transform .25s ease; }
+        .skill-group:hover { background: var(--soft); transform: translateY(-3px); }
+        .skill-group h3 { margin-bottom: 2rem; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase; }
+        .skill-group ul { display: grid; gap: .8rem; margin: 0; padding: 0; color: var(--muted); font-size: .82rem; list-style: none; }
+        .skill-item { display: inline-flex; align-items: center; gap: .55rem; transition: color .2s ease, transform .2s ease; }
+        .skill-item:hover { color: var(--black); transform: translateX(4px); }
+        .skill-item .brand-logo { width: 1rem; height: 1rem; }
+        section { padding: 7rem 0; border-bottom: 1px solid var(--line); }
+        .section-heading { display: grid; grid-template-columns: 1fr 2fr; gap: 2rem; margin-bottom: 4rem; }
+        .section-number { color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .15em; }
+        h2 { margin-bottom: .75rem; font-size: clamp(2.1rem, 4vw, 4rem); line-height: 1; letter-spacing: -.06em; }
+        .section-intro { max-width: 610px; color: var(--muted); font-size: 1rem; line-height: 1.8; }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+        .about-grid p { max-width: 560px; color: var(--muted); line-height: 1.9; }
+        .focus-list { display: grid; grid-template-columns: 1fr 1fr; gap: .8rem 2rem; margin: 0; padding: 0; list-style: none; }
+        .focus-list li { padding: .85rem 0; border-top: 1px solid var(--line); font-size: .9rem; transition: padding-left .2s ease, border-color .2s ease; }
+        .focus-list li:hover { padding-left: .5rem; border-color: var(--black); }
+        .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; margin-top: 4rem; background: var(--line); }
+        .stat { padding: 1.4rem; background: #fff; transition: background .25s ease, transform .25s ease; }
+        .stat:hover { background: var(--soft); transform: translateY(-3px); }
+        .stat strong { display: block; margin-bottom: .35rem; font-size: 2rem; letter-spacing: -.06em; }
+        .stat span { color: var(--muted); font-size: .72rem; }
+        .project-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); }
+        .project { display: flex; min-height: 390px; flex-direction: column; padding: 1.75rem; background: #fff; transition: background .25s ease, transform .25s ease, border-color .25s ease; }
+        .project:hover { background: var(--soft); transform: translateY(-5px); }
+        .project.featured { background: var(--soft); }
+        .project-meta { display: flex; justify-content: space-between; margin-bottom: 4.8rem; color: var(--muted); font-size: .7rem; letter-spacing: .1em; text-transform: uppercase; }
+        .project h3 { margin-bottom: .8rem; font-size: 1.45rem; letter-spacing: -.04em; }
+        .project p { color: var(--muted); font-size: .88rem; line-height: 1.7; }
+        .tags { display: flex; flex-wrap: wrap; gap: .45rem; margin-top: auto; padding-top: 2rem; }
+        .tag { display: inline-flex; align-items: center; gap: .35rem; padding: .35rem .55rem; border: 1px solid var(--line); color: var(--muted); font-size: .66rem; transition: border-color .2s ease, color .2s ease; }
+        .tag:hover { border-color: var(--black); color: var(--black); }
+        .tag .brand-logo { width: .8rem; height: .8rem; }
+        .project-links { display: flex; gap: 1rem; margin-top: 1.2rem; font-size: .72rem; font-weight: 600; }
+        .project-links a { text-underline-offset: 4px; }
+        .project-links a:hover { color: var(--muted); }
+        .project-links a::first-letter { transition: transform .2s ease; }
+        .timeline { position: relative; max-width: 800px; margin-left: auto; }
+        .timeline::before { position: absolute; top: 0; bottom: 0; left: 145px; width: 1px; background: var(--black); content: ""; transform: scaleY(0); transform-origin: top; transition: transform .9s ease .1s; }
+        .timeline.is-visible::before { transform: scaleY(1); }
+        .timeline-item { display: grid; grid-template-columns: 130px 1fr; gap: 2rem; padding: 2rem 0; border-top: 1px solid var(--line); }
+        .timeline-year { display: flex; align-items: flex-start; gap: .65rem; }
+        .timeline-marker { display: inline-grid; width: 1.15rem; height: 1.15rem; place-items: center; border: 1px solid var(--black); color: var(--black); }
+        .timeline-marker svg { width: .7rem; height: .7rem; }
+        .timeline-year { color: var(--muted); font-size: .75rem; }
+        .timeline-item h3 { margin-bottom: .45rem; font-size: 1.1rem; }
+        .timeline-item p { margin-bottom: 1rem; color: var(--muted); font-size: .85rem; }
+        .timeline-item ul { display: grid; gap: .5rem; margin: 0; padding-left: 1rem; color: var(--muted); font-size: .84rem; line-height: 1.6; }
+        .timeline-item + .timeline-item { border-top: 1px solid var(--line); }
+        .timeline-item .employment-type { margin-top: -.4rem; color: var(--muted); font-size: .72rem; }
+        .timeline-item .entry-description { max-width: 650px; margin-top: 1.1rem; }
+        .education { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; }
+        .education-label { display: flex; align-items: center; gap: .7rem; margin-bottom: 1.5rem; color: var(--muted); font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+        .education-label svg { width: 1rem; height: 1rem; color: var(--black); }
+        .degree { font-size: 1.65rem; line-height: 1.25; letter-spacing: -.04em; }
+        .school, .honors { color: var(--muted); font-size: .88rem; line-height: 1.7; }
+        .honors { margin-top: 1.5rem; color: var(--ink); font-weight: 600; }
+        .achievements { display: grid; gap: .8rem; margin: 0; padding: 0; list-style: none; }
+        .achievements li { padding: .9rem 0; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; transition: padding-left .2s ease, color .2s ease; }
+        .achievements li:hover { padding-left: .5rem; color: var(--ink); }
+        .contact { padding: 8rem 0 9rem; }
+        .contact h2 { max-width: 720px; font-size: clamp(3rem, 8vw, 7rem); }
+        .contact-copy { max-width: 480px; color: var(--muted); line-height: 1.8; }
+        .contact-links { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; font-size: .85rem; }
+        .contact-links a { display: inline-flex; align-items: center; gap: .45rem; text-underline-offset: 5px; }
+        footer { padding: 2rem 0; color: var(--muted); font-size: .7rem; }
+        .footer-inner { display: flex; justify-content: space-between; gap: 2rem; }
+        .footer-inner strong { color: var(--ink); letter-spacing: .1em; }
+        .js .reveal { opacity: 0; transform: translateY(24px); transition: opacity .65s ease, transform .65s ease; }
+        .js .reveal.is-visible { opacity: 1; transform: translateY(0); }
+        .js .hero .hero-item { opacity: 0; transform: translateY(18px); transition: opacity .55s ease, transform .55s ease; }
+        .js .hero.is-visible .hero-item { opacity: 1; transform: translateY(0); }
+        .js .hero .hero-item:nth-child(1) { transition-delay: .05s; }
+        .js .hero .hero-item:nth-child(2) { transition-delay: .15s; }
+        .js .hero .hero-item:nth-child(3) { transition-delay: .3s; }
+        .js .hero .hero-item:nth-child(4) { transition-delay: .42s; }
+        .js .hero .hero-item:nth-child(5) { transition-delay: .55s; }
+        .js .hero .hero-visual { transform: translateX(40px); transition-delay: .2s; }
+        .js .hero .hero-content { opacity: 0; transform: none; transition: opacity .65s ease; }
+        .js .hero.is-visible .hero-content { opacity: 1; }
+        .js .hero.is-visible .hero-visual { transform: translateX(0); }
+        .js .timeline-item { opacity: 0; transform: translateX(-18px); transition: opacity .65s ease, transform .65s ease; }
+        .js .timeline-item.is-visible { opacity: 1; transform: translateX(0); }
+        .js .stagger > * { transition-delay: calc(var(--stagger-index, 0) * 70ms); }
         @media (prefers-reduced-motion: reduce) {
-            .line {
-                animation: none;
-            }
+            html { scroll-behavior: auto; }
+            .js .reveal, .js .hero .hero-item, .js .timeline-item, .hero-title-line { opacity: 1; transform: none; transition: none; }
+            .timeline::before { transform: scaleY(1); transition: none; }
+            .button, .project, .stat, .skill-group { transition: none; }
         }
-
-        @media (max-width: 780px) {
-            .shell {
-                padding: 0;
-            }
-
-            .terminal {
-                width: 100%;
-                height: 100vh;
-                border-radius: 0;
-                border-left: 0;
-                border-right: 0;
-            }
-
-            .chrome {
-                gap: 0.5rem;
-                padding: 0.75rem 0.85rem;
-            }
-
-            .chrome-title {
-                font-size: 0.72rem;
-            }
-
-            .chrome-status {
-                display: none;
-            }
-
-            .output {
-                padding: 1rem 0.9rem 0.9rem;
-            }
-
-            .command-line {
-                flex-wrap: wrap;
-                gap: 0.5rem;
-            }
-
-            .input-hint {
-                width: 100%;
-                white-space: normal;
-            }
-
-            .banner {
-                font-size: 0.6rem;
-            }
+        @media (max-width: 820px) {
+            .nav-links { gap: 1rem; }
+            .hero-layout { gap: 3rem; }
+            .section-heading, .about-grid, .education { grid-template-columns: 1fr; gap: 1.5rem; }
+            .skill-grid { grid-template-columns: repeat(2, 1fr); }
+            .project-grid { grid-template-columns: 1fr; }
+            .project { min-height: 320px; }
+            .project-meta { margin-bottom: 3.5rem; }
         }
+        @media (max-width: 560px) {
+            .container { width: min(100% - 32px, var(--max)); }
+            .nav { min-height: 64px; }
+            .menu-button { display: block; }
+            .nav-links { display: none; position: absolute; top: 64px; right: 16px; left: 16px; flex-direction: column; align-items: stretch; gap: 0; padding: .5rem 1rem; border: 1px solid var(--line); background: #fff; }
+            .nav-links.open { display: flex; }
+            .nav-links a { padding: .85rem 0; border-bottom: 1px solid var(--line); }
+            .nav-links a:last-child { border-bottom: 0; }
+            .hero { padding: 5rem 0 5rem; }
+            .hero-layout { grid-template-columns: 1fr; gap: 4rem; }
+            .hero-visual { justify-self: stretch; }
+            .code-window { box-shadow: 8px 8px 0 #fff, 9px 9px 0 var(--line); }
+            section { padding: 5rem 0; }
+            .tech-strip { margin-top: 3.5rem; }
+            .skill-grid, .stats { grid-template-columns: 1fr; }
+            .skill-group { min-height: auto; }
+            .timeline::before { left: .55rem; }
+            .timeline-item { grid-template-columns: 1fr; gap: .7rem; padding-left: 2rem; }
+            .timeline-year { position: relative; }
+            .timeline-marker { position: absolute; left: -1.45rem; }
+            .footer-inner { flex-direction: column; gap: .7rem; }
+        }
+        @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
     </style>
 </head>
 <body>
-    <noscript>
-        <div style="max-width:720px;margin:2rem auto;padding:1.5rem;font-family:monospace;color:#e5e7eb;background:#0b0c0d;">
-            <h1>Josh Neiel C. Manalo</h1>
-            <p>Software Developer | Full-Stack Web Developer — Philippines</p>
-            <p>Software Developer with hands-on experience designing, developing, testing, and deploying scalable web applications using React, Laravel, MySQL, PHP, and C#.</p>
-            <p>Email: joshneiel.manalo102403@gmail.com · GitHub: github.com/whiplashx</p>
-            <p>Enable JavaScript to use the interactive terminal version of this portfolio.</p>
-        </div>
-    </noscript>
-    <main class="shell">
-        <section class="terminal" id="terminal">
-            <header class="chrome">
-                <div class="dots" aria-hidden="true">
-                    <span class="dot red"></span>
-                    <span class="dot yellow"></span>
-                    <span class="dot green"></span>
-                </div>
-                <div class="chrome-title">joshneiel@portfolio :: interactive terminal</div>
-                <div class="chrome-status" id="statusChip">ONLINE</div>
-            </header>
-
-            <div class="terminal-body">
-                <div class="output" id="output" aria-live="polite"></div>
-
-                <form class="command-line" id="commandForm" autocomplete="off">
-                    <span class="prompt" id="promptText">joshneiel@portfolio:~$</span>
-                    <span class="caret-wrap">
-                        <input id="commandInput" class="command-input" type="text" inputmode="text" spellcheck="false" autocomplete="off" autocapitalize="off" aria-label="Terminal command input" placeholder="type a command...">
-                    </span>
-                    <span class="input-hint">enter to run, ↑↓ for history</span>
-                </form>
+    <header class="site-header">
+        <nav class="nav container" aria-label="Main navigation">
+            <a class="brand" href="#top">JOSH MANALO</a>
+            <button class="menu-button" type="button" aria-expanded="false" aria-controls="nav-links" aria-label="Toggle navigation">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-links" id="nav-links">
+                <a href="#about">About</a><a href="#skills">Skills</a><a href="#projects">Projects</a><a href="#experience">Experience</a><a href="#contact">Contact</a>
             </div>
+        </nav>
+    </header>
+
+    <main id="top">
+        <section class="hero">
+            <div class="container hero-layout">
+                <div class="hero-content">
+                    <p class="eyebrow">FULL-STACK WEB DEVELOPER</p>
+                    <h1><span class="hero-title-line">Building</span><span class="hero-title-line">reliable web</span><span class="hero-title-line">applications</span></h1>
+                    <p class="hero-copy">Full-stack software developer specializing in Laravel, React, PHP, JavaScript, MySQL, and RESTful APIs. Experienced in developing and deploying production web applications, designing database-driven systems, integrating external services, and managing Linux server infrastructure.</p>
+                    <div class="actions"><a class="button primary" href="#projects">View My Projects</a><a class="button secondary" href="#contact">Get In Touch</a></div>
+                    <div class="tech-strip" aria-label="Primary technologies">
+                    <span class="logo-item"><img class="brand-logo" src="https://cdn.simpleicons.org/php/111111" alt="" aria-hidden="true">PHP</span>
+                    <span class="logo-item"><img class="brand-logo" src="https://cdn.simpleicons.org/laravel/111111" alt="" aria-hidden="true">Laravel</span>
+                    <span class="logo-item"><img class="brand-logo" src="https://cdn.simpleicons.org/react/111111" alt="" aria-hidden="true">React</span>
+                    <span class="logo-item"><img class="brand-logo" src="https://cdn.simpleicons.org/javascript/111111" alt="" aria-hidden="true">JavaScript</span>
+                    <span class="logo-item"><img class="brand-logo" src="https://cdn.simpleicons.org/mysql/111111" alt="" aria-hidden="true">MySQL</span>
+                    <span class="logo-item"><img class="brand-logo" src="https://cdn.simpleicons.org/github/111111" alt="" aria-hidden="true">GitHub</span>
+                    </div>
+                </div>
+                <div class="hero-visual" aria-label="Developer workspace preview">
+                    <div class="code-window">
+                        <div class="code-window-header"><span class="code-dots" aria-hidden="true"><span></span><span></span><span></span></span><span>workspace / app.tsx</span></div>
+                        <div class="code-body">
+                            <div><span class="code-keyword">const</span> project = {</div>
+                            <div>&nbsp;&nbsp;stack: [<strong>"Laravel"</strong>, <strong>"React"</strong>],</div>
+                            <div>&nbsp;&nbsp;database: <strong>"MySQL"</strong>,</div>
+                            <div>&nbsp;&nbsp;status: <strong>"shipping"</strong></div>
+                            <div>};</div>
+                            <br>
+                            <div class="code-comment">// build with clarity</div>
+                        </div>
+                        <div class="code-status">All systems ready for useful software.</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="about">
+            <div class="container">
+                <div class="section-heading"><div class="section-number">01 / ABOUT</div><div><h2>Practical software, thoughtfully made.</h2><p class="section-intro">A developer focused on solving technical problems and turning complex requirements into dependable products.</p></div></div>
+                <div class="about-grid">
+                    <p>I am a software developer focused on building practical and reliable web applications. I enjoy solving technical problems, designing backend systems, working with databases, and creating clean user interfaces.</p>
+                    <ul class="focus-list"><li>Full-Stack Web Development</li><li>REST API Development</li><li>Database Design</li><li>Software Architecture</li><li>Linux and Server Administration</li><li>Problem Solving</li></ul>
+                </div>
+                <div class="stats"><div class="stat"><strong>4+</strong><span>Full-Stack Projects</span></div><div class="stat"><strong>4–6</strong><span>Team Members Led</span></div><div class="stat"><strong>2026</strong><span>IT Graduate</span></div></div>
+            </div>
+        </section>
+
+        <section id="skills">
+            <div class="container">
+                <div class="section-heading"><div class="section-number">02 / SKILLS</div><div><h2>Tools for the work.</h2><p class="section-intro">A versatile technical foundation across product development, infrastructure, and delivery.</p></div></div>
+                <div class="skill-grid">
+                    <div class="skill-group"><h3>Languages</h3><ul>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/php/111111" alt="" aria-hidden="true">PHP</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/javascript/111111" alt="" aria-hidden="true">JavaScript</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/dotnet/111111" alt="" aria-hidden="true">C#</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/python/111111" alt="" aria-hidden="true">Python</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/openjdk/111111" alt="" aria-hidden="true">Java</li>
+                    </ul></div>
+                    <div class="skill-group"><h3>Frontend</h3><ul>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/react/111111" alt="" aria-hidden="true">React</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/html5/111111" alt="" aria-hidden="true">HTML5</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/css/111111" alt="" aria-hidden="true">CSS3</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/tailwindcss/111111" alt="" aria-hidden="true">Tailwind CSS</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/typescript/111111" alt="" aria-hidden="true">TypeScript</li>
+                    </ul></div>
+                    <div class="skill-group"><h3>Backend</h3><ul>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/laravel/111111" alt="" aria-hidden="true">Laravel</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/nodedotjs/111111" alt="" aria-hidden="true">Node.js</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/springboot/111111" alt="" aria-hidden="true">Spring Boot</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/fastapi/111111" alt="" aria-hidden="true">FastAPI</li>
+                    </ul></div>
+                    <div class="skill-group"><h3>Database</h3><ul>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/mysql/111111" alt="" aria-hidden="true">MySQL</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/firebase/111111" alt="" aria-hidden="true">Firebase</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/mongodb/111111" alt="" aria-hidden="true">MongoDB</li>
+                    </ul></div>
+                    <div class="skill-group"><h3>Infrastructure & Tools</h3><ul>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/linux/111111" alt="" aria-hidden="true">Linux</li>
+                        <li class="skill-item">Windows Server</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/git/111111" alt="" aria-hidden="true">Git</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/github/111111" alt="" aria-hidden="true">GitHub</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/docker/111111" alt="" aria-hidden="true">Docker</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/cloudflare/111111" alt="" aria-hidden="true">Cloudflare</li>
+                        <li class="skill-item">Oracle VM VirtualBox</li>
+                        <li class="skill-item"><img class="brand-logo" src="https://cdn.simpleicons.org/postman/111111" alt="" aria-hidden="true">Postman</li>
+                    </ul></div>
+                </div>
+            </div>
+        </section>
+
+        <section id="projects">
+            <div class="container">
+                <div class="section-heading"><div class="section-number">03 / PROJECTS</div><div><h2>Selected work.</h2><p class="section-intro">Full-stack systems designed around real workflows, clear information, and reliable operations.</p></div></div>
+                <div class="project-grid">
+                    <article class="project featured"><div class="project-meta"><span>Featured / 01</span><span>GIS</span></div><h3>iMap</h3><p>A web-based GIS platform for visualizing and managing land subdivisions and cadastral information.</p><div class="tags"><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/laravel/111111" alt="" aria-hidden="true">Laravel</span><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/react/111111" alt="" aria-hidden="true">React</span><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/mysql/111111" alt="" aria-hidden="true">MySQL</span><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/esri/111111" alt="" aria-hidden="true">ArcGIS</span></div><div class="project-links"></div></article>
+                    <article class="project"><div class="project-meta"><span>Featured / 02</span><span>Workflow</span></div><h3>ACCSYS</h3><p>A document management system designed to streamline academic accreditation workflows and document tracking.</p><div class="tags"><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/laravel/111111" alt="" aria-hidden="true">Laravel</span><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/react/111111" alt="" aria-hidden="true">React</span><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/mysql/111111" alt="" aria-hidden="true">MySQL</span></div></article>
+                    <article class="project featured"><div class="project-meta"><span>Featured / 03</span><span>Commerce</span></div><h3>Arbitrage CMS</h3><p>A full-stack e-commerce and inventory management platform with checkout, transactions, and payment integration.</p><div class="tags"><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/laravel/111111" alt="" aria-hidden="true">Laravel</span><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/react/111111" alt="" aria-hidden="true">React</span><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/mysql/111111" alt="" aria-hidden="true">MySQL</span><span class="tag"><img class="brand-logo" src="https://cdn.simpleicons.org/paypal/111111" alt="" aria-hidden="true">PayPal REST API</span></div><div class="project-links"><a href="https://arbitrage.com.ph" target="_blank" rel="noopener noreferrer">Live demo ↗</a></div></article>
+                </div>
+            </div>
+        </section>
+
+        <section id="experience">
+            <div class="container">
+                <div class="section-heading"><div class="section-number">04 / EXPERIENCE</div><div><h2>Experience.</h2><p class="section-intro">Building, deploying, and maintaining practical software solutions.</p></div></div>
+                <div class="timeline">
+                    <article class="timeline-item">
+                        <div class="timeline-year"><span class="timeline-marker" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5h8v2M3 12h18"/></svg></span>2023 – Present</div>
+                        <div><h3>Full-Stack Web Developer</h3><p>Freelance / Academic Projects</p><p class="employment-type">Freelance and project-based development</p><p class="entry-description">Designed, developed, tested, deployed, and maintained full-stack web applications for academic and business workflows.</p><ul><li>Developed 3+ production-ready web applications using React, Laravel, MySQL, and RESTful APIs.</li><li>Designed relational database schemas, backend data access logic, and database-driven workflows.</li><li>Implemented authentication, role-based access control, CRUD operations, and third-party API integrations.</li><li>Deployed and maintained applications on Hostinger and self-hosted Linux/Debian servers using SSH.</li><li>Configured Cloudflare Tunnel for secure access to applications hosted on private infrastructure.</li><li>Performed API testing with Postman, debugging, database troubleshooting, and performance optimization.</li><li>Used Git and GitHub for version control, feature development, and collaborative maintenance.</li><li>Contributed to replacing manual workflows and improving operational efficiency by approximately 30%.</li></ul><div class="tags"><span class="tag">Laravel</span><span class="tag">React</span><span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">MySQL</span><span class="tag">REST APIs</span><span class="tag">Linux</span><span class="tag">Git</span><span class="tag">Cloudflare</span></div></div>
+                    </article>
+                    <article class="timeline-item">
+                        <div class="timeline-year"><span class="timeline-marker" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5h8v2M3 12h18"/></svg></span>2026</div>
+                        <div><h3>Full-Stack Web Developer Intern</h3><p>Arbitrage Incorporated</p><p class="employment-type">Internship / On-the-Job Training</p><p class="entry-description">Contributed to full-stack application development while leading a small Agile team through implementation, debugging, testing, and release activities.</p><ul><li>Led a 4–6 member Agile development team, coordinating task assignments, sprint deliverables, and implementation priorities.</li><li>Developed and maintained frontend and backend features based on functional requirements and project architecture.</li><li>Supported React frontend development, Laravel backend implementation, database operations, and API integration.</li><li>Diagnosed and resolved defects across frontend components, backend services, APIs, and database operations.</li><li>Participated in sprint planning, code reviews, functional testing, regression testing, and deployment validation.</li><li>Provided technical guidance to teammates on implementation issues, debugging procedures, and development practices.</li></ul><div class="tags"><span class="tag">Laravel</span><span class="tag">React</span><span class="tag">PHP</span><span class="tag">JavaScript</span><span class="tag">MySQL</span><span class="tag">REST APIs</span><span class="tag">Git</span></div></div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container">
+                <div class="section-heading"><div class="section-number">05 / EDUCATION</div><div><h2>Education & achievements.</h2></div></div>
+                <div class="education"><div><div class="education-label"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="m3 9 9-5 9 5-9 5-9-5Z"/><path d="M7 11v5c2.8 2.3 7.2 2.3 10 0v-5M21 9v6"/></svg>Academic background</div><p class="degree">Bachelor of Science in Information Technology</p><p class="honors">Magna Cum Laude</p></div><ul class="achievements"><li>Outstanding IT Student of the Year 2026</li><li>Best Capstone Award</li><li>Competitive Programming Competitions</li><li>Hackathons</li><li>Capture The Flag / Hack4Gov CTF</li></ul></div>
+            </div>
+        </section>
+
+        <section class="contact" id="contact">
+            <div class="container"><p class="eyebrow">06 / CONTACT</p><h2>Let's build something useful.</h2><p class="contact-copy">I'm open to software development opportunities, freelance projects, and collaborations.</p><div class="actions" style="margin-top:2rem"><a class="button primary" href="mailto:joshneiel.manalo102403@gmail.com">Get In Touch</a></div><div class="contact-links"><a href="mailto:joshneiel.manalo102403@gmail.com"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="m3 7 9 6 9-6"/></svg>joshneiel.manalo102403@gmail.com</a><a href="https://github.com/whiplashx" target="_blank" rel="noopener noreferrer"><img class="brand-logo" src="https://cdn.simpleicons.org/github/111111" alt="" aria-hidden="true">github.com/whiplashx ↗</a></div></div>
         </section>
     </main>
 
+    <footer><div class="container footer-inner"><strong>JOSH NEIEL C. MANALO</strong><span>© 2026 · Software Developer / Full-Stack Web Developer</span><span><a href="mailto:joshneiel.manalo102403@gmail.com">Email</a> · <a href="https://github.com/whiplashx" target="_blank" rel="noopener noreferrer">GitHub</a></span></div></footer>
     <script>
-        const profile = {
-            asciiBanner: [
-                "     ██╗███╗   ██╗ ██████╗███╗   ███╗",
-                "     ██║████╗  ██║██╔════╝████╗ ████║",
-                "     ██║██╔██╗ ██║██║     ██╔████╔██║",
-                "██   ██║██║╚██╗██║██║     ██║╚██╔╝██║",
-                "╚█████╔╝██║ ╚████║╚██████╗██║ ╚═╝ ██║",
-                " ╚════╝ ╚═╝  ╚═══╝ ╚═════╝╚═╝     ╚═╝"
-            ].join("\n"),
-            welcomeMessage: "Welcome to the personal portfolio of Josh Neiel C. Manalo. (Version 2.1.0)",
-            subtitle: "Software Developer · Full-Stack Web Developer · Philippines",
-            helpHint: "Type 'help' to see the list of available commands.",
-            person: {
-                name: "Josh Neiel C. Manalo",
-                title: "Software Developer | Full-Stack Web Developer",
-                location: "Philippines",
-                phone: "0946 335 2484",
-                email: "joshneiel.manalo102403@gmail.com",
-                github: "github.com/whiplashx",
-                education: "BS Information Technology, Mindoro State University – Bongabong Campus, Magna Cum Laude",
-                summary: "Software Developer with hands-on experience designing, developing, testing, and deploying scalable web applications using React, Laravel, MySQL, PHP, and C#. Skilled in debugging, database optimization, API integration, and production maintenance. Strong foundation in OOP, SDLC, and Agile development."
-            },
-            skills: {
-                Programming: ["PHP", "JavaScript", "C#", "Python"],
-                Frontend: ["React", "HTML", "CSS", "Tailwind"],
-                Backend: ["Laravel", "REST APIs"],
-                Database: ["MySQL", "Firebase"],
-                Tools: ["Git", "GitHub", "Postman", "VS Code"],
-                Infrastructure: ["Linux", "SSH", "Hostinger", "Cloudflare Tunnel"]
-            },
-            experience: [
-                {
-                    title: "Full-Stack Web Developer",
-                    company: "Freelance / Academic Projects",
-                    period: "2023 – Present",
-                    bullets: [
-                        "Developed, implemented, and maintained 3+ production-ready full-stack web applications using React, Laravel, MySQL, and RESTful APIs, improving organizational workflows by ~30%.",
-                        "Designed and optimized relational database schemas and backend services for concurrent users and scalability.",
-                        "Configured, deployed, and maintained production applications on Hostinger and on-premises Linux servers via SSH and Cloudflare Tunnel.",
-                        "Collaborated using Git/GitHub with branching strategies that reduced merge conflicts.",
-                        "Integrated third-party APIs and business logic to meet client requirements.",
-                        "Performed application testing, debugging, and optimization before deployment."
-                    ]
-                },
-                {
-                    title: "Full-Stack Web Developer Intern (OJT)",
-                    company: "Arbitrage Incorporated",
-                    period: "2026",
-                    bullets: [
-                        "Development team lead for a 4–6 member Agile team, coordinating tasks and sprint delivery.",
-                        "Mentored fellow developers across frontend, backend, and database implementation.",
-                        "Built and maintained frontend/backend features to coding standards.",
-                        "Collaborated on sprint planning, code reviews, and deployments.",
-                        "Performed debugging, testing, and issue resolution for software quality.",
-                        "Supported QA testing, release validation, and production deployment."
-                    ]
-                }
-            ],
-            projects: [
-                {
-                    name: "GIS Parcel Management System",
-                    stack: ["Laravel", "React", "MySQL", "ArcGIS", "React Leaflet", "REST API", "JavaScript", "HTML5", "CSS3", "Git"],
-                    description: "Developed a full-stack Geographic Information System (GIS) for managing parcel subdivisions and land records. Implemented interactive map visualization, spatial data management, authentication, and RESTful APIs to streamline land administration workflows.",
-                    link: "https://imap-plotter.com",
-                    github: null
-                },
-                {
-                    name: "Accreditation Document Management System",
-                    stack: ["Laravel", "React", "MySQL", "JavaScript", "HTML5", "CSS3", "REST API", "Git"],
-                    description: "Built a document management platform for organizing accreditation records with role-based authentication, secure file uploads, document management, and report generation.",
-                    link: null,
-                    github: null
-                },
-                {
-                    name: "E-Commerce Content Management System",
-                    stack: ["Laravel", "MySQL", "JavaScript", "PayPal API", "HTML5", "CSS3", "Bootstrap", "REST API", "Git"],
-                    description: "Developed a full-featured e-commerce platform with inventory management, product catalog, content management, shopping cart, secure checkout, and PayPal payment integration.",
-                    link: "https://arbitrage.com.ph",
-                    github: null
-                },
-                {
-                    name: "Internship Management System",
-                    stack: ["Laravel", "React", "MySQL", "JavaScript", "HTML5", "CSS3", "REST API", "Git"],
-                    description: "Designed and developed a web application for managing internship programs, including student tracking, company assignments, evaluations, progress monitoring, and document management.",
-                    link: "https://avc-sol.com",
-                    github: null
-                },
-                {
-                    name: "Business Management Web Application",
-                    stack: ["Laravel", "React", "MySQL", "JavaScript", "HTML5", "CSS3", "REST API", "Git"],
-                    description: "Developed a responsive full-stack business management application featuring user authentication, CRUD operations, dashboard analytics, and database-driven workflows.",
-                    link: null,
-                    github: null
-                },
-                {
-                    name: "Enterprise Management Platform",
-                    stack: ["Laravel", "React", "MySQL", "JavaScript", "HTML5", "CSS3", "REST API", "Git"],
-                    description: "Created a scalable enterprise web application with role-based access control, workflow automation, user management, and RESTful API architecture.",
-                    link: null,
-                    github: null
-                },
-                {
-                    name: "Resort Reservation & Management System",
-                    stack: ["Laravel", "MySQL", "JavaScript", "HTML5", "CSS3", "Bootstrap", "REST API", "Git"],
-                    description: "Built a web-based reservation and management platform for hospitality businesses with online booking, customer management, room management, and an administrative dashboard.",
-                    link: null,
-                    github: null
-                },
-                {
-                    name: "Ride Booking Mobile Application",
-                    stack: ["Flutter", "Dart", "Firebase", "Google Maps API", "REST API", "Git"],
-                    description: "Developed a cross-platform ride-booking mobile application featuring user authentication, trip management, location services, and a responsive mobile interface.",
-                    link: null,
-                    github: null
-                },
-                {
-                    name: "Property Rental Mobile Application",
-                    stack: ["Flutter", "Dart", "Firebase", "REST API", "Git"],
-                    description: "Built a cross-platform property rental application that enables users to browse, search, and book rental properties with real-time data synchronization.",
-                    link: null,
-                    github: null
-                },
-                {
-                    name: "AI Document Question Answering System",
-                    stack: ["Python", "FastAPI", "Hugging Face", "PyTorch", "spaCy", "pdfplumber", "REST API", "Git"],
-                    description: "Developed an AI-powered document analysis platform capable of extracting information from PDF files and generating context-aware answers using transformer-based natural language processing models.",
-                    link: null,
-                    github: null
-                }
-            ],
-            certifications: [
-                "Cisco Networking Academy – Ethical Hacker",
-                "Python Programming 2 – CodeChum"
-            ],
-            terminalPrompt: "joshneiel@portfolio:~$",
-            commands: [
-                { label: "about", alias: "a", note: "summary and role" },
-                { label: "skills", alias: "s", note: "technical stack by category" },
-                { label: "experience", alias: "exp", note: "work history" },
-                { label: "projects", alias: "pj", note: "supports 'projects <number>' for full detail" },
-                { label: "education", alias: "edu", note: "degree and certifications" },
-                { label: "resume", alias: "cv", note: "contact + summary" },
-                { label: "contact", alias: "c", note: "how to reach me" },
-                { label: "clear", alias: null, note: "clear the screen" }
-            ],
-            easterEggs: {
-                hackermode: "Toggles a green hacker-styled theme.",
-                sudo: "Nice try. This incident will be reported."
+        document.body.classList.add("js");
+
+        const menuButton = document.querySelector(".menu-button");
+        const navLinks = document.querySelector("#nav-links");
+        const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+        menuButton.addEventListener("click", () => {
+            const isOpen = navLinks.classList.toggle("open");
+            menuButton.setAttribute("aria-expanded", String(isOpen));
+        });
+        navLinks.addEventListener("click", (event) => {
+            if (event.target.matches("a")) {
+                navLinks.classList.remove("open");
+                menuButton.setAttribute("aria-expanded", "false");
             }
+        });
+
+        const hero = document.querySelector(".hero");
+        hero.classList.add("reveal");
+        [...hero.querySelector(".container").children].forEach((element) => {
+            element.classList.add("hero-item");
+        });
+
+        const revealTargets = [
+            ".section-heading",
+            ".about-grid",
+            ".stats",
+            ".skill-grid",
+            ".project-grid",
+            ".timeline",
+            ".education",
+            ".contact .eyebrow",
+            ".contact h2",
+            ".contact-copy",
+            ".contact .actions",
+            ".contact-links",
+            "footer"
+        ];
+        const revealElements = revealTargets.flatMap((selector) => [...document.querySelectorAll(selector)]);
+        revealElements.forEach((element) => element.classList.add("reveal"));
+        const timelineItems = [...document.querySelectorAll(".timeline-item")];
+
+        document.querySelectorAll(".focus-list, .skill-group ul, .tags, .achievements").forEach((group) => {
+            group.classList.add("stagger");
+            [...group.children].forEach((child, index) => {
+                child.style.setProperty("--stagger-index", index);
+                child.classList.add("reveal");
+            });
+        });
+
+        const revealObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                entry.target.classList.add("is-visible");
+                observer.unobserve(entry.target);
+            });
+        }, { threshold: .15 });
+        timelineItems.forEach((item, index) => {
+            item.style.transitionDelay = `${index * 150}ms`;
+            revealObserver.observe(item);
+        });
+
+        if (reduceMotion) {
+            document.querySelectorAll(".reveal").forEach((element) => element.classList.add("is-visible"));
+            document.querySelector(".timeline").classList.add("is-visible");
+            timelineItems.forEach((item) => item.classList.add("is-visible"));
+        } else {
+            revealElements.concat([...document.querySelectorAll(".reveal")]).forEach((element) => revealObserver.observe(element));
+        }
+
+        requestAnimationFrame(() => {
+            hero.classList.add("is-visible");
+        });
+
+        const stats = document.querySelector(".stats");
+        const countUp = (element) => {
+            const match = element.textContent.trim().match(/^(\d+)\+$/);
+            if (!match || reduceMotion) return;
+            const target = Number(match[1]);
+            const start = performance.now();
+            const duration = 750;
+            const update = (now) => {
+                const progress = Math.min((now - start) / duration, 1);
+                element.textContent = `${Math.round(target * (1 - Math.pow(1 - progress, 3)))}+`;
+                if (progress < 1) requestAnimationFrame(update);
+            };
+            requestAnimationFrame(update);
         };
+        const statsObserver = new IntersectionObserver(([entry], observer) => {
+            if (!entry.isIntersecting) return;
+            countUp(stats.querySelector("strong"));
+            observer.disconnect();
+        }, { threshold: .5 });
+        statsObserver.observe(stats);
 
-        const output = document.getElementById("output");
-        const form = document.getElementById("commandForm");
-        const input = document.getElementById("commandInput");
-        const terminal = document.getElementById("terminal");
-        const statusChip = document.getElementById("statusChip");
-
-        const history = [];
-        let historyIndex = -1;
-        let hackermode = false;
-
-        const commandMap = new Map([
-            ["about", "about"], ["a", "about"],
-            ["skills", "skills"], ["s", "skills"],
-            ["experience", "experience"], ["exp", "experience"],
-            ["projects", "projects"], ["pj", "projects"],
-            ["education", "education"], ["edu", "education"],
-            ["resume", "resume"], ["cv", "resume"],
-            ["contact", "contact"], ["c", "contact"],
-            ["clear", "clear"],
-            ["help", "help"],
-            ["hackermode", "hackermode"],
-            ["sudo", "sudo"]
-        ]);
-
-        function escapeHtml(value) {
-            return String(value)
-                .replaceAll("&", "&amp;")
-                .replaceAll("<", "&lt;")
-                .replaceAll(">", "&gt;")
-                .replaceAll('"', "&quot;");
-        }
-
-        function scrollToBottom() {
-            output.scrollTop = output.scrollHeight;
-        }
-
-        function appendLine(html, className = "line") {
-            const node = document.createElement("div");
-            node.className = className;
-            node.innerHTML = html;
-            output.appendChild(node);
-            scrollToBottom();
-            return node;
-        }
-
-        function appendBlock(className, innerHTML) {
-            const node = document.createElement("div");
-            node.className = className;
-            node.innerHTML = innerHTML;
-            output.appendChild(node);
-            scrollToBottom();
-            return node;
-        }
-
-        function renderIntro() {
-            appendLine(`<div class="banner">${escapeHtml(profile.asciiBanner)}</div>`, "line green");
-            appendLine(`<strong class="soft">${escapeHtml(profile.welcomeMessage)}</strong>`, "line soft welcome");
-            appendLine(escapeHtml(profile.subtitle), "line muted");
-            appendLine(`<span class="blip">${escapeHtml(profile.helpHint)}</span>`, "line accent");
-            appendLine(`Session initialized. Type <span class="command-chip">help</span> to list commands.`, "line muted");
-        }
-
-        function renderHelp() {
-            appendBlock("line", `
-                <div class="terminal-result">
-                    <div class="terminal-result-title">help</div>
-                    <div class="terminal-result-body">
-                        <ul class="terminal-result-list">
-                            ${profile.commands.map((cmd) => `<li><span class="command-chip">${escapeHtml(cmd.label)}</span>${cmd.alias ? ` (alias: <span class="command-chip">${escapeHtml(cmd.alias)}</span>)` : ""} — ${escapeHtml(cmd.note)}</li>`).join("")}
-                        </ul>
-                        <div class="terminal-result-note">Tip: use <span class="command-chip">projects &lt;number&gt;</span>, e.g. <span class="command-chip">projects 1</span>, for full project details.</div>
-                    </div>
-                </div>
-            `);
-        }
-
-        function renderAbout() {
-            appendBlock("line", `
-                <div class="terminal-result">
-                    <div class="terminal-result-title">about</div>
-                    <div class="terminal-result-body">
-                        <div class="terminal-result-line"><span class="terminal-result-label">name:</span> ${escapeHtml(profile.person.name)}</div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">title:</span> ${escapeHtml(profile.person.title)}</div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">location:</span> ${escapeHtml(profile.person.location)}</div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">summary:</span> ${escapeHtml(profile.person.summary)}</div>
-                    </div>
-                </div>
-            `);
-        }
-
-        function renderSkills() {
-            const groups = Object.entries(profile.skills).map(([label, items]) => `
-                <div class="terminal-result-line"><span class="terminal-result-label">${escapeHtml(label.toLowerCase())}:</span> ${items.map((item) => escapeHtml(item)).join(", ")}</div>
-            `).join("");
-
-            appendBlock("line", `
-                <div class="terminal-result">
-                    <div class="terminal-result-title">skills</div>
-                    <div class="terminal-result-body">${groups}</div>
-                </div>
-            `);
-        }
-
-        function renderExperience() {
-            appendBlock("line", `
-                <div class="terminal-result">
-                    <div class="terminal-result-title">experience</div>
-                    <div class="terminal-result-body">
-                        ${profile.experience.map((entry) => `
-                            <div class="terminal-result-line"><span class="terminal-result-label">${escapeHtml(entry.title)}</span> · ${escapeHtml(entry.company)} · ${escapeHtml(entry.period)}</div>
-                            <ul class="terminal-result-list">
-                                ${entry.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join("")}
-                            </ul>
-                        `).join("")}
-                    </div>
-                </div>
-            `);
-        }
-
-        function projectButtons(project) {
-            const liveBtn = project.link
-                ? `<a class="project-btn" href="${escapeHtml(project.link)}" target="_blank" rel="noopener noreferrer">view live page</a>`
-                : `<span class="project-btn disabled">view live page</span>`;
-            const githubBtn = project.github
-                ? `<a class="project-btn" href="${escapeHtml(project.github)}" target="_blank" rel="noopener noreferrer">view source</a>`
-                : "";
-            return `<div class="project-buttons">${liveBtn}${githubBtn}</div>`;
-        }
-
-        function renderProjects(detailIndex = null) {
-            if (detailIndex !== null) {
-                const project = profile.projects[detailIndex];
-                if (!project) {
-                    appendLine(`Project ${detailIndex + 1} not found. Use <span class="command-chip">projects</span> to list all entries (1–${profile.projects.length}).`, "line warn");
-                    return;
-                }
-
-                appendBlock("line", `
-                    <div class="terminal-result">
-                        <div class="terminal-result-title">project ${detailIndex + 1} / ${profile.projects.length}</div>
-                        <div class="terminal-result-body">
-                            <div class="terminal-result-line"><span class="terminal-result-label">name:</span> ${escapeHtml(project.name)}</div>
-                            <div class="terminal-result-line"><span class="terminal-result-label">description:</span> ${escapeHtml(project.description)}</div>
-                            <div class="terminal-result-line"><span class="terminal-result-label">stack:</span> ${project.stack.map((item) => escapeHtml(item)).join(", ")}</div>
-                            ${projectButtons(project)}
-                        </div>
-                    </div>
-                `);
-                return;
-            }
-
-            appendBlock("line", `
-                <div class="terminal-result">
-                    <div class="terminal-result-title">projects (${profile.projects.length})</div>
-                    <div class="terminal-result-body">
-                        ${profile.projects.map((project, index) => `
-                            <div class="project-entry">
-                                <div class="terminal-result-line"><span class="terminal-result-label">${index + 1}. ${escapeHtml(project.name)}</span></div>
-                                <div class="terminal-result-line terminal-result-note">${escapeHtml(project.description)}</div>
-                                <div class="terminal-result-line terminal-result-note">stack: ${project.stack.map((item) => escapeHtml(item)).join(", ")}</div>
-                                ${projectButtons(project)}
-                            </div>
-                        `).join("")}
-                    </div>
-                </div>
-            `);
-        }
-
-        function renderEducation() {
-            appendBlock("line", `
-                <div class="terminal-result">
-                    <div class="terminal-result-title">education</div>
-                    <div class="terminal-result-body">
-                        <div class="terminal-result-line"><span class="terminal-result-label">degree:</span> ${escapeHtml(profile.person.education)}</div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">certifications:</span></div>
-                        <ul class="terminal-result-list">
-                            ${profile.certifications.map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
-                        </ul>
-                    </div>
-                </div>
-            `);
-        }
-
-        function renderResume() {
-            appendBlock("line", `
-                <div class="terminal-result">
-                    <div class="terminal-result-title">resume</div>
-                    <div class="terminal-result-body">
-                        <div class="terminal-result-line"><span class="terminal-result-label">phone:</span> ${escapeHtml(profile.person.phone)}</div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">email:</span> <a class="contact-link" href="mailto:${escapeHtml(profile.person.email)}">${escapeHtml(profile.person.email)}</a></div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">github:</span> <a class="contact-link" href="https://${escapeHtml(profile.person.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(profile.person.github)}</a></div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">location:</span> ${escapeHtml(profile.person.location)}</div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">summary:</span> ${escapeHtml(profile.person.summary)}</div>
-                    </div>
-                </div>
-            `);
-        }
-
-        function renderContact() {
-            appendBlock("line", `
-                <div class="terminal-result">
-                    <div class="terminal-result-title">contact</div>
-                    <div class="terminal-result-body">
-                        <div class="terminal-result-line"><span class="terminal-result-label">email:</span> <a class="contact-link" href="mailto:${escapeHtml(profile.person.email)}">${escapeHtml(profile.person.email)}</a></div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">phone:</span> ${escapeHtml(profile.person.phone)}</div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">github:</span> <a class="contact-link" href="https://${escapeHtml(profile.person.github)}" target="_blank" rel="noopener noreferrer">${escapeHtml(profile.person.github)}</a></div>
-                        <div class="terminal-result-line"><span class="terminal-result-label">status:</span> Open for software development opportunities, collaboration, and project work.</div>
-                    </div>
-                </div>
-            `);
-        }
-
-        function renderClear() {
-            output.innerHTML = "";
-            renderIntro();
-        }
-
-        function toggleHackermode() {
-            hackermode = !hackermode;
-            terminal.classList.toggle("hackermode", hackermode);
-            statusChip.textContent = hackermode ? "HACKER MODE" : "ONLINE";
-            appendLine(hackermode ? "Hackermode activated." : "Hackermode deactivated.", "line danger");
-        }
-
-        function renderUnknown(command) {
-            appendLine(`Unknown command: <span class="warn">${escapeHtml(command)}</span>. Type <span class="command-chip">help</span> for available commands.`, "line warn");
-        }
-
-        function executeCommand(rawValue) {
-            const trimmed = rawValue.trim();
-
-            if (!trimmed) {
-                return;
-            }
-
-            appendLine(`<span class="prompt">${escapeHtml(profile.terminalPrompt)}</span> ${escapeHtml(trimmed)}`, "line green");
-
-            const [head, ...rest] = trimmed.toLowerCase().split(/\s+/);
-            const normalized = commandMap.get(head);
-
-            if (!normalized) {
-                renderUnknown(trimmed);
-                return;
-            }
-
-            switch (normalized) {
-                case "help":
-                    renderHelp();
-                    break;
-                case "about":
-                    renderAbout();
-                    break;
-                case "skills":
-                    renderSkills();
-                    break;
-                case "experience":
-                    renderExperience();
-                    break;
-                case "projects": {
-                    if (rest.length) {
-                        const index = Number.parseInt(rest[0], 10);
-                        if (Number.isFinite(index)) {
-                            renderProjects(index - 1);
-                            break;
-                        }
-                    }
-                    renderProjects();
-                    break;
-                }
-                case "education":
-                    renderEducation();
-                    break;
-                case "resume":
-                    renderResume();
-                    break;
-                case "contact":
-                    renderContact();
-                    break;
-                case "clear":
-                    renderClear();
-                    break;
-                case "hackermode":
-                    toggleHackermode();
-                    break;
-                case "sudo":
-                    appendLine(profile.easterEggs.sudo, "line danger");
-                    break;
-                default:
-                    renderUnknown(trimmed);
-            }
-        }
-
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            const value = input.value;
-            if (!value.trim()) {
-                return;
-            }
-            input.value = "";
-            history.push(value);
-            historyIndex = history.length;
-            executeCommand(value);
-            input.focus();
-        });
-
-        input.addEventListener("keydown", (event) => {
-            if (event.key === "ArrowUp") {
-                event.preventDefault();
-                if (!history.length) {
-                    return;
-                }
-                historyIndex = Math.max(0, historyIndex - 1);
-                input.value = history[historyIndex] ?? "";
-                queueMicrotask(() => input.setSelectionRange(input.value.length, input.value.length));
-            }
-
-            if (event.key === "ArrowDown") {
-                event.preventDefault();
-                if (!history.length) {
-                    return;
-                }
-                historyIndex = Math.min(history.length, historyIndex + 1);
-                input.value = history[historyIndex] ?? "";
-                queueMicrotask(() => input.setSelectionRange(input.value.length, input.value.length));
-            }
-        });
-
-        // Refocus the terminal input when the user clicks anywhere in the
-        // terminal (but not on a link/button) so typing "just works".
-        terminal.addEventListener("click", (event) => {
-            const isInteractive = event.target instanceof Element && event.target.closest("a, button");
-            if (!isInteractive) {
-                input.focus();
-            }
-        });
-
-        // Refocus on printable keystrokes typed anywhere on the page, but
-        // never hijack modifier combos (Ctrl/Cmd+F, Cmd+Tab, etc.) or steal
-        // focus from another interactive element the user is deliberately using.
-        document.addEventListener("keydown", (event) => {
-            if (event.ctrlKey || event.metaKey || event.altKey) {
-                return;
-            }
-            const active = document.activeElement;
-            if (active && active !== input && active !== document.body) {
-                return;
-            }
-            if (event.key.length === 1 || event.key === "Backspace") {
-                input.focus();
-            }
-        });
-
-        function boot() {
-            renderIntro();
-            input.focus();
-        }
-
-        boot();
+        const sections = [...document.querySelectorAll("main section[id]")];
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (!entry.isIntersecting) return;
+                document.querySelectorAll(".nav-links a").forEach((link) => {
+                    link.classList.toggle("active", link.getAttribute("href") === `#${entry.target.id}`);
+                });
+            });
+        }, { rootMargin: "-35% 0px -55% 0px", threshold: 0 });
+        sections.forEach((section) => sectionObserver.observe(section));
     </script>
 </body>
 </html>

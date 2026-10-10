@@ -1,14 +1,14 @@
 # whiplashx.github.io
 
-A minimalist terminal-style portfolio website.
+Minimalist portfolio website for Josh Neiel C. Manalo, a software developer and
+full-stack web developer.
 
 ## Features
 
-- 🖥️ Terminal/CLI aesthetic with green monospace fonts
-- 📱 Fully responsive design
-- ⚡ Lightweight and fast
-- 🎨 Minimalist design philosophy
-- 🔗 Easy to customize
+- 📱 Fully responsive layout with a mobile navigation menu
+- ⚡ Lightweight, single-page HTML/CSS/JavaScript implementation
+- 🎨 Monochrome visual system with generous whitespace and thin borders
+- 🔗 Anchored sections for about, skills, projects, experience, education, and contact
 
 ## Structure
 
@@ -23,18 +23,20 @@ A minimalist terminal-style portfolio website.
 
 Edit the `index.html` file to update:
 
-1. **Header Section**: Update your name and tagline
-2. **About Section**: Add your bio
-3. **Projects Section**: Replace with your actual projects
-4. **Skills Section**: Update your technical skills
-5. **Contact Section**: Add your contact information
+1. **Hero Section**: Update your name, tagline, and primary technologies
+2. **About Section**: Add your bio, focus areas, and statistics
+3. **Projects Section**: Replace project descriptions, tags, and links
+4. **Skills Section**: Update your technical skills by category
+5. **Experience and Education**: Update your timeline and achievements
+6. **Contact Section**: Add your contact information and links
 
 ## Color Scheme
 
-- **Background**: `#0a0e27` (dark blue/black)
-- **Terminal Green**: `#00ff41` (main accent color)
-- **Cyan Hover**: `#00ffff` (interactive elements)
-- **Gray**: Various shades for secondary text
+- **Background**: `#FFFFFF`
+- **Primary**: `#000000`
+- **Text**: `#111111`
+- **Muted text**: `#666666`
+- **Borders and secondary background**: `#E5E5E5` and `#F7F7F7`
 
 ## Deployment
 
